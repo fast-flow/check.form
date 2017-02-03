@@ -1,0 +1,15 @@
+language: node_js
+
+node_js:
+- "6.0"
+
+branches:
+only:
+- master
+- dev
+
+install:
+- npm install --registry=https://registry.npm.taobao.org
+
+script:
+- npm run test-ci
