@@ -41,3 +41,37 @@ it('ajax', function () {
         })
     })
 })
+
+it('Multiple async errors', function () {
+    var errorCount = 0
+    return new Promise(function (resolve, reject) {
+        test.check('abc', {
+            tests: [
+                {
+                    async: function (pass, fail) {
+                        fail('async error 1')
+                    }
+                },
+                {
+                    async: function (pass, fail) {
+                        fail('async error 2')
+                    }
+                }
+            ]
+        }, {
+            pass: function () {
+                reject()
+            },
+            asyncFail: function (error) {
+                errorCount++
+                expect(error.errorMsg).toMatch(/async error (1|2)/)
+                if (errorCount === 2) {
+                    resolve()
+                }
+            },
+            fail: function (errors) {
+                reject()
+            }
+        })
+    })
+})
