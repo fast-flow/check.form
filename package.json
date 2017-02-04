@@ -29,5 +29,8 @@
     "babel-polyfill": "^6.22.0",
     "extend": "^3.0.0",
     "mustache": "^2.3.0"
+  },
+  "jest": {
+      "testRegex": "(/__test__/.*|\\.(test|spec))\\.(ts|tsx|js)$"
   }
 }
