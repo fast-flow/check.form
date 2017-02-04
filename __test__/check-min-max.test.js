@@ -22,7 +22,7 @@ it('min 5', function () {
                                 "be": true,
                                 "min": 5,
                                 "msg": "用户名不能小于5位",
-                                "trim": true
+                                "trim": false
                             }
                         }
                     ])
@@ -56,7 +56,7 @@ it('max 5', function () {
                                 "be": true,
                                 "max": 5,
                                 "msg": "用户名不能大于5位",
-                                "trim": true
+                                "trim": false
                             }
                         }
                     ])
@@ -93,7 +93,7 @@ it('min 5 max 10 value:1234567890123456789', function () {
                                 "min": 5,
                                 "msg": "用户名不能小于5位和大于10位",
                                 "rule": "test/check-min-max",
-                                "trim": true
+                                "trim": false
                             }
                         }
                     ])

@@ -24,7 +24,7 @@ it('addRule testabc |value: "abc"', function () {
                         "name": "用户名",
                         "regexp": /abc/,
                         "rule": "testabc",
-                        "trim": true
+                        "trim": false
                     }
                 }])
             }

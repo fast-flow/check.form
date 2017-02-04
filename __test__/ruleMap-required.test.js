@@ -17,7 +17,7 @@ it('required | value: ""', function () {
                         "rule": {
                             "regexp": /\S/,
                             "be": true,
-                            "trim": true,
+                            "trim": false,
                             "msg": "{{ name }}必填",
                             "rule": "required",
                             "name": "用户名"
@@ -80,7 +80,7 @@ it('required every true', function () {
                                 "name": "用户名",
                                 "regexp": /\S/,
                                 "rule": "required",
-                                "trim": true
+                                "trim": false
                             }
                         },
                         {
@@ -89,7 +89,7 @@ it('required every true', function () {
                                 "be": true,
                                 "msg": "必填哦",
                                 "regexp": /\S/,
-                                "trim": true
+                                "trim": false
                             }
                         }
                     ]

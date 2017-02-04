@@ -18,7 +18,7 @@ it('check(value, {fn:function(){}})', function () {
             settings: {
                 onError: function (errors) {
                     expect(typeof errors[0].rule.fn).toEqual('function')
-                    expect(JSON.stringify(errors)).toEqual("[{\"rule\":{\"trim\":true,\"be\":true,\"rule\":\"bansome\"},\"errorMsg\":\"错误\"}]")
+                    expect(JSON.stringify(errors)).toEqual("[{\"rule\":{\"trim\":false,\"be\":true,\"rule\":\"bansome\"},\"errorMsg\":\"错误\"}]")
                     resolve()
                 }
             }

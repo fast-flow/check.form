@@ -51,3 +51,45 @@ it('async onPass', function () {
         })
     })
 })
+
+it('async multiple', function () {
+    var errorCount = 0
+    var p = new Promise(function (resolve, reject) {
+        test.check({
+            value: '1234567890',
+            rules: [
+                {
+                    rule: {
+                        async: function (done) {
+                            setTimeout(function () {
+                                done('error1');return
+                            },10)
+                        }
+                    }
+                },
+                {
+                    rule: {
+                        async: function (done) {
+                            setTimeout(function () {
+                                done('error2');return
+                            },10)
+                        }
+                    }
+                }
+            ],
+            settings: {
+                onAsyncError: function (error) {
+                    errorCount++
+                    expect(error.errorMsg).toMatch(/error(1|2)/)
+                    if (errorCount === 2) {
+                        resolve()
+                    }
+                },
+                onPass: function () {
+                    reject()
+                }
+            }
+        })
+    })
+    return p
+})
