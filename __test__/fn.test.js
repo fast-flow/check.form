@@ -24,28 +24,29 @@ it('function', function () {
                 resolve()
             }
         })
-    }).then(function () {
-        return new Promise(function(resolve, reject) {
-            test.check('123', {
-                name: '函数校验',
-                tests: [
-                    {
-                        fn: function (value) {
-                            // fail
-                            // return "错误消息"
-                            // pass
-                            return
-                        }
-                    }
-                ]
-            }, {
-                pass: function () {
-                    resolve()
-                },
-                fail: function (errors) {
-                    reject()
-                }
-            })
-        })
     })
+    // .then(function () {
+    //     return new Promise(function(resolve, reject) {
+    //         test.check('123', {
+    //             name: '函数校验',
+    //             tests: [
+    //                 {
+    //                     fn: function (value) {
+    //                         // fail
+    //                         // return "错误消息"
+    //                         // pass
+    //                         return
+    //                     }
+    //                 }
+    //             ]
+    //         }, {
+    //             pass: function () {
+    //                 resolve()
+    //             },
+    //             fail: function (errors) {
+    //                 reject()
+    //             }
+    //         })
+    //     })
+    // })
 })
