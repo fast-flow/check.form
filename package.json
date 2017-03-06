@@ -4,6 +4,7 @@
   "description": "The form data validation library.Does not contain UI.",
   "main": "lib/index.js",
   "scripts": {
+    "build": "webpack",
     "test-ci": "./node_modules/jest/bin/jest.js",
     "test": "./node_modules/jest/bin/jest.js --watch"
   },
@@ -26,7 +27,6 @@
     "jest": "^18.1.0"
   },
   "dependencies": {
-    "babel-polyfill": "^6.22.0",
     "extend": "^3.0.0",
     "mustache": "^2.3.0"
   },

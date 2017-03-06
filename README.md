@@ -1,5 +1,7 @@
 # form-test
 
+[Online Documents](https://fast-flow.github.io/form-test) or [docs/README.md](./docs/README.md)
+
 > The form data validation library.Does not contain UI.
 
 ```js
