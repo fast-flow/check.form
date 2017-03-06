@@ -16,11 +16,11 @@ test.check('some', {
         }
     ]
 }, {
-    finish: function () {
+    always: function () {
         console.log('check done')
     },
-    pass: function () {
-        console.log('pass')
+    done: function () {
+        console.log('done')
     },
     fail: function (errros) {
         console.log(errros[0].errorMsg)

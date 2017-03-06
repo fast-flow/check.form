@@ -11,7 +11,7 @@ it('basic', function () {
                 }
             ]
         }, {
-            pass: function () {
+            done: function () {
                 reject()
             },
             fail: function (errors) {
@@ -40,7 +40,7 @@ it('basic', function () {
                     }
                 ]
             }, {
-                pass: function () {
+                done: function () {
                     resolve()
                 },
                 fail: function () {

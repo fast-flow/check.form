@@ -40,7 +40,7 @@ it('min 5 has sapce', function () {
                 }
             ]
         }, {
-            pass: function (errors) {
+            done: function (errors) {
                 resolve()
             }
         })
@@ -119,7 +119,7 @@ it('max 10 "1234"', function () {
                 }
             ]
         }, {
-            pass: function (errors) {
+            done: function (errors) {
                 resolve()
             }
         })
@@ -167,7 +167,7 @@ it('max 10 trim:true', function () {
                 }
             ]
         }, {
-            pass: function () {
+            done: function () {
                 resolve()
             }
         })
@@ -214,7 +214,7 @@ it('min max', function () {
                      }
                  ]
              }, {
-                 pass: function (errors) {
+                 done: function (errors) {
                      resolve()
                  },
                  fail: function () {

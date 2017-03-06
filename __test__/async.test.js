@@ -5,7 +5,7 @@ it('ajax', function () {
         test.check('abc', {
             tests: [
                 {
-                    async: function (pass, fail) {
+                    async: function (done, fail) {
                         // mock ajax
                         setTimeout(function () {
                             fail('异步错误消息')
@@ -25,16 +25,16 @@ it('ajax', function () {
             test.check('abc', {
                 tests: [
                     {
-                        async: function (pass, fail) {
+                        async: function (done, fail) {
                             // mock ajax
                             setTimeout(function () {
-                                pass()
+                                done()
                             }, 200)
                         }
                     }
                 ]
             }, {
-                pass: function () {
+                done: function () {
                     resolve()
                 }
             })
@@ -48,18 +48,18 @@ it('Multiple async errors', function () {
         test.check('abc', {
             tests: [
                 {
-                    async: function (pass, fail) {
+                    async: function (done, fail) {
                         fail('async error 1')
                     }
                 },
                 {
-                    async: function (pass, fail) {
+                    async: function (done, fail) {
                         fail('async error 2')
                     }
                 }
             ]
         }, {
-            pass: function () {
+            done: function () {
                 reject()
             },
             asyncFail: function (error) {

@@ -204,49 +204,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param value {string}
 	 * @param settings {object}
 	 * @param callback {object}
-	 * @param callback.pass {function}
+	 * @param callback.done {function}
 	 * @param callback.fail {function}
-	 * @param callback.finish {function}
+	 * @param callback.always {function}
 	 */
 	module.exports = function (value, settings, callback) {
 	    var self = this
 	    var defaultCallback = {
-	        pass: function () {},
+	        done: function () {},
 	        fail: function () {},
 	        asyncFail: function () {},
-	        finish: function () {}
+	        always: function () {}
 	    }
 	    extend(true, defaultCallback, callback)
 	    callback = defaultCallback
 	    var stat = {
 	        sync: {
 	            fail: [],
-	            pass: [],
+	            done: [],
 	            count: 0
 	        },
 	        async: {
 	            fail: [],
-	            pass: [],
+	            done: [],
 	            count: 0
 	        }
 	    }
 	    var checkAsyncTestDone = function () {
-	        if (stat.async.count === stat.async.pass.length) {
-	            callback.pass()
+	        if (stat.async.count === stat.async.done.length) {
+	            callback.done()
 	        }
-	        if (stat.async.count === stat.async.pass.length + stat.async.fail.length) {
-	            callback.finish(stat)
+	        if (stat.async.count === stat.async.done.length + stat.async.fail.length) {
+	            callback.always(stat)
 	        }
 	    }
 	    var emit = function (action) {
 	        switch (action.type) {
-	            case 'SYNC_PASS':
-	                stat.sync.pass.push({
+	            case 'SYNC_done':
+	                stat.sync.done.push({
 	                    rule: action.rule
 	                })
 	            break
-	            case "ASYNC_PASS":
-	                stat.async.pass.push({
+	            case "ASYNC_done":
+	                stat.async.done.push({
 	                    rule: action.rule
 	                })
 	                checkAsyncTestDone()
@@ -289,12 +289,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (stat.sync.fail.length) {
 	        callback.fail(stat.sync.fail)
 	    }
-	    // 不存在异步校验时，根据同步校验错误计数回调 fail 或 pass
+	    // 不存在异步校验时，根据同步校验错误计数回调 fail 或 done
 	    if (stat.async.count === 0) {
 	        if (stat.sync.fail.length === 0) {
-	            callback.pass()
+	            callback.done()
 	        }
-	        callback.finish(stat)
+	        callback.always(stat)
 	    }
 	}
 
@@ -328,7 +328,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            test: function () {
 	                if (rule.regexp.test(value) === rule.be) {
 	                    emit({
-	                        type: 'SYNC_PASS',
+	                        type: 'SYNC_done',
 	                        rule: rule
 	                    })
 	                }
@@ -346,7 +346,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            test: function () {
 	                if (rule.equal === value) {
 	                    emit({
-	                        type: 'SYNC_PASS',
+	                        type: 'SYNC_done',
 	                        rule: rule
 	                    })
 	                }
@@ -365,7 +365,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var errorMsg = rule.fn(value)
 	                if (!errorMsg) {
 	                    emit({
-	                        type: 'SYNC_PASS',
+	                        type: 'SYNC_done',
 	                        rule: rule
 	                    })
 	                }
@@ -384,7 +384,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var p = new Promise(rule.async)
 	                p.then(function () {
 	                    emit({
-	                        type: 'ASYNC_PASS',
+	                        type: 'ASYNC_done',
 	                        rule: rule
 	                    })
 	                }, function (errorMsg) {
@@ -401,7 +401,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        min: function () {
 	            if (value.length >= rule.min) {
 	                emit({
-	                    type: 'SYNC_PASS',
+	                    type: 'SYNC_done',
 	                    rule: rule
 	                })
 	            }
@@ -416,7 +416,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        max: function () {
 	            if (value.length <= rule.max) {
 	                emit({
-	                    type: 'SYNC_PASS',
+	                    type: 'SYNC_done',
 	                    rule: rule
 	                })
 	            }
@@ -431,7 +431,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        minmax: function () {
 	            if (value.length >= rule.min && value.length <= rule.max) {
 	                emit({
-	                    type: 'SYNC_PASS',
+	                    type: 'SYNC_done',
 	                    rule: rule
 	                })
 	            }
