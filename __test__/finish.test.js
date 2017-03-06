@@ -1,7 +1,7 @@
 var Test = require('../lib/index')
 var test = new Test()
 
-it('finish sync pass 1 error 1', function () {
+it('always sync done 1 error 1', function () {
     return new Promise(function(resolve, reject) {
         test.check('abc', {
             tests: [
@@ -17,13 +17,13 @@ it('finish sync pass 1 error 1', function () {
                 }
             ]
         }, {
-            finish: function (stat) {
+            always: function (stat) {
                 expect(stat).toEqual(
                     {
                         "async": {
                             "count": 0,
                             "fail": [],
-                            "pass": []
+                            "done": []
                         },
                         "sync": {
                             "count": 2,
@@ -37,7 +37,7 @@ it('finish sync pass 1 error 1', function () {
                                     }
                                 }
                             ],
-                            "pass": [
+                            "done": [
                                 {
                                     "rule": {
                                         "be": true,
@@ -55,7 +55,7 @@ it('finish sync pass 1 error 1', function () {
     })
 })
 
-it('finish sync error 2', function () {
+it('always sync error 2', function () {
     return new Promise(function(resolve, reject) {
         test.check('abc', {
             tests: [
@@ -71,13 +71,13 @@ it('finish sync error 2', function () {
                 }
             ]
         }, {
-            finish: function (stat) {
+            always: function (stat) {
                 expect(stat).toEqual(
                     {
                         "async": {
                             "count": 0,
                             "fail": [],
-                            "pass": []
+                            "done": []
                         },
                         "sync": {
                             "count": 1,
@@ -91,7 +91,7 @@ it('finish sync error 2', function () {
                                     }
                                 }
                             ],
-                            "pass": []
+                            "done": []
                         }
                     }
                 )
@@ -101,7 +101,7 @@ it('finish sync error 2', function () {
     })
 })
 
-it('finish sync error 2 every', function () {
+it('always sync error 2 every', function () {
     return new Promise(function(resolve, reject) {
         test.check('abc', {
             every: true,
@@ -118,13 +118,13 @@ it('finish sync error 2 every', function () {
                 }
             ]
         }, {
-            finish: function (stat) {
+            always: function (stat) {
                 expect(stat).toEqual(
                     {
                         "async": {
                             "count": 0,
                             "fail": [],
-                            "pass": []
+                            "done": []
                         },
                         "sync": {
                             "count": 2,
@@ -146,7 +146,7 @@ it('finish sync error 2 every', function () {
                                     }
                                 }
                             ],
-                            "pass": []
+                            "done": []
                         }
                     }
                 )
@@ -156,7 +156,7 @@ it('finish sync error 2 every', function () {
     })
 })
 
-it('finish async', function () {
+it('always async', function () {
     return new Promise(function(resolve, reject) {
         test.check('abc', {
             tests: [
@@ -165,7 +165,7 @@ it('finish async', function () {
                     msg: '不能存在z'
                 },
                 {
-                    async: function (pass, fail) {
+                    async: function (done, fail) {
                         setTimeout(function () {
                             fail('异步错误消息')
                         }, 100)
@@ -173,13 +173,13 @@ it('finish async', function () {
                 }
             ]
         }, {
-            finish: function (stat) {
+            always: function (stat) {
                 expect(stat).toEqual(
                     {
                         "async": {
                             "count": 0,
                             "fail": [],
-                            "pass": []
+                            "done": []
                         },
                         "sync": {
                             "count": 1,
@@ -192,7 +192,7 @@ it('finish async', function () {
                                     }
                                 }
                             ],
-                            "pass": []
+                            "done": []
                         }
                     }
                 )
@@ -209,7 +209,7 @@ it('finish async', function () {
                         msg: '不能存在z'
                     },
                     {
-                        async: function (pass, fail) {
+                        async: function (done, fail) {
                             setTimeout(function () {
                                 fail('异步错误消息')
                             }, 100)
@@ -217,9 +217,9 @@ it('finish async', function () {
                     }
                 ]
             }, {
-                finish: function (stat) {
+                always: function (stat) {
                     expect(JSON.stringify(stat)).toEqual(
-                        "{\"sync\":{\"fail\":[{\"rule\":{\"regexp\":{},\"msg\":\"不能存在z\"},\"errorMsg\":\"不能存在z\"}],\"pass\":[],\"count\":1},\"async\":{\"fail\":[{\"rule\":{},\"errorMsg\":\"异步错误消息\"}],\"pass\":[],\"count\":1}}"
+                        "{\"sync\":{\"fail\":[{\"rule\":{\"regexp\":{},\"msg\":\"不能存在z\"},\"errorMsg\":\"不能存在z\"}],\"done\":[],\"count\":1},\"async\":{\"fail\":[{\"rule\":{},\"errorMsg\":\"异步错误消息\"}],\"done\":[],\"count\":1}}"
                     )
                     resolve()
                 }
@@ -228,19 +228,19 @@ it('finish async', function () {
     })
 })
 
-it('finish multiple async', function () {
+it('always multiple async', function () {
     return new Promise(function (resolve, reject) {
         test.check('abc', {
             tests: [
                 {
-                    async: function (pass, fail) {
+                    async: function (done, fail) {
                         setTimeout(function () {
                             fail('async error 1')
                         }, 100)
                     }
                 },
                 {
-                    async: function (pass, fail) {
+                    async: function (done, fail) {
                         setTimeout(function () {
                             fail('async error 2')
                         }, 100)
@@ -248,8 +248,8 @@ it('finish multiple async', function () {
                 }
             ]
         }, {
-            finish: function (stat) {
-                expect(JSON.stringify(stat)).toEqual('{"sync":{"fail":[],"pass":[],"count":0},"async":{"fail":[{"rule":{},"errorMsg":"async error 1"},{"rule":{},"errorMsg":"async error 2"}],"pass":[],"count":2}}')
+            always: function (stat) {
+                expect(JSON.stringify(stat)).toEqual('{"sync":{"fail":[],"done":[],"count":0},"async":{"fail":[{"rule":{},"errorMsg":"async error 1"},{"rule":{},"errorMsg":"async error 2"}],"done":[],"count":2}}')
                 resolve()
             }
         })

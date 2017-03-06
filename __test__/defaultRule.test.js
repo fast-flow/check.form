@@ -10,7 +10,7 @@ it('required', function () {
                 }
             ]
         }, {
-            pass: function () {
+            done: function () {
                 resolve()
             },
             fail: function () {
@@ -28,7 +28,7 @@ it('required', function () {
                     }
                 ]
             }, {
-                pass: function () {
+                done: function () {
                     reject()
                 },
                 fail: function () {
@@ -47,7 +47,7 @@ it('required', function () {
                     }
                 ]
             }, {
-                pass: function () {
+                done: function () {
                     resolve()
                 },
                 fail: function () {
@@ -67,7 +67,7 @@ it('email', function () {
                 }
             ]
         }, {
-            pass: function () {
+            done: function () {
                 resolve()
             },
             fail: function () {
@@ -83,7 +83,7 @@ it('email', function () {
                     }
                 ]
             }, {
-                pass: function () {
+                done: function () {
                     reject()
                 },
                 fail: function (errors) {
@@ -115,7 +115,7 @@ it('url', function () {
                 }
             ]
         }, {
-            pass: function () {
+            done: function () {
                 resolve()
             },
             fail: function () {
@@ -131,7 +131,7 @@ it('url', function () {
                     }
                 ]
             }, {
-                pass: function () {
+                done: function () {
                     reject()
                 },
                 fail: function (errors) {
@@ -154,7 +154,7 @@ it('easyurl', function () {
                 }
             ]
         }, {
-            pass: function () {
+            done: function () {
                 resolve()
             },
             fail: function () {
@@ -170,7 +170,7 @@ it('easyurl', function () {
                     }
                 ]
             }, {
-                pass: function () {
+                done: function () {
                     resolve()
                 },
                 fail: function (errors) {
@@ -190,7 +190,7 @@ it('mobile', function () {
                 }
             ]
         }, {
-            pass: function () {
+            done: function () {
                 resolve()
             },
             fail: function () {
@@ -207,7 +207,7 @@ it('mobile', function () {
                     }
                 ]
             }, {
-                pass: function () {
+                done: function () {
                     reject()
                 },
                 fail: function (errors) {

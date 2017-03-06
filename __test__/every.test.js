@@ -91,7 +91,7 @@ var test = new Test()
 //                     msg: '{{name}}必须大于或等于5位'
 //                 },
 //                 {
-//                     async: function (pass, fail) {
+//                     async: function (done, fail) {
 //                         setTimeout(function () {
 //                             fail('异步错误消息')
 //                         }, 200)
@@ -136,7 +136,7 @@ it('debug', function () {
                     msg: '{{name}}必须大于或等于5位'
                 },
                 {
-                    async: function (pass, fail) {
+                    async: function (done, fail) {
                         setTimeout(function () {
                             fail('异步错误消息')
                         }, 200)

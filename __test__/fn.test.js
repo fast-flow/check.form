@@ -9,13 +9,13 @@ it('function', function () {
                     fn: function (value) {
                         // fail
                         return "错误消息"
-                        // pass
+                        // done
                         // return
                     }
                 }
             ]
         }, {
-            pass: function () {
+            done: function () {
                 reject()
             },
             fail: function (errors) {
@@ -34,13 +34,13 @@ it('function', function () {
     //                     fn: function (value) {
     //                         // fail
     //                         // return "错误消息"
-    //                         // pass
+    //                         // done
     //                         return
     //                     }
     //                 }
     //             ]
     //         }, {
-    //             pass: function () {
+    //             done: function () {
     //                 resolve()
     //             },
     //             fail: function (errors) {

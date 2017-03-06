@@ -15,11 +15,11 @@ new Test().check('some', {
         }
     ]
 }, {
-    finish: function () {
-        console.log('"some"', 'finish')
+    always: function () {
+        console.log('"some"', 'always')
     },
-    pass: function () {
-        console.info('"some"', 'pass')
+    done: function () {
+        console.info('"some"', 'done')
     },
     fail: function (errros) {
         console.error('"some"', errros[0].errorMsg)
@@ -34,11 +34,11 @@ new Test().check('', {
         }
     ]
 }, {
-    finish: function () {
-        console.log('""', 'finish')
+    always: function () {
+        console.log('""', 'always')
     },
-    pass: function () {
-        console.log('""', 'pass')
+    done: function () {
+        console.log('""', 'done')
     },
     fail: function (errros) {
         console.error('""', errros[0].errorMsg)
@@ -61,11 +61,11 @@ new Test().check('', {
         }
     ]
 }, {
-    finish: function () {
-        console.log('""', 'finish')
+    always: function () {
+        console.log('""', 'always')
     },
-    pass: function () {
-        console.log('""', 'pass')
+    done: function () {
+        console.log('""', 'done')
     },
     fail: function (errros) {
         console.error('""', errros[0].errorMsg)
@@ -82,11 +82,11 @@ new Test().check('mail@qq', {
         }
     ]
 }, {
-    finish: function () {
-        console.log('"mail@qq"', 'finish')
+    always: function () {
+        console.log('"mail@qq"', 'always')
     },
-    pass: function () {
-        console.info('"mail@qq"', 'pass')
+    done: function () {
+        console.info('"mail@qq"', 'done')
     },
     fail: function (errros) {
         console.error('"mail@qq"', errros[0].errorMsg)
@@ -103,11 +103,11 @@ new Test().check('mail@qq.cc', {
         }
     ]
 }, {
-    finish: function () {
-        console.log('"mail@qq.cc"', 'finish')
+    always: function () {
+        console.log('"mail@qq.cc"', 'always')
     },
-    pass: function () {
-        console.info('"mail@qq.cc"', 'pass')
+    done: function () {
+        console.info('"mail@qq.cc"', 'done')
     },
     fail: function (errros) {
         console.error('"mail@qq.cc"', errros[0].errorMsg)
@@ -172,7 +172,7 @@ console.info('---------- async -----------')
 new FormTest().check('abc', {
     tests: [
         {
-            async: function (pass, fail) {
+            async: function (done, fail) {
                 // mock ajax
                 setTimeout(function () {
                     fail('异步错误消息')
@@ -184,8 +184,8 @@ new FormTest().check('abc', {
     asyncFail: function (error) {
         console.error(error.errorMsg)
     },
-    finish: function () {
-        console.log('async finish')
+    always: function () {
+        console.log('async always')
     }
 })
 ````
@@ -216,7 +216,7 @@ new FormTest().check('123', {
         }
     ]
 }, {
-    pass: function () {
+    done: function () {
         console.info('重复密码验证通过')
     }
 })
@@ -240,7 +240,7 @@ new FormTest().check('abc', {
             msg: '{{name}}必须大于或等于5位'
         },
         {
-            async: function (pass, fail) {
+            async: function (done, fail) {
                 setTimeout(function () {
                     fail('异步错误消息')
                 }, 200)
@@ -270,7 +270,7 @@ new FormTest().check('123', {
             fn: function (value) {
                 // fail
                 return "fn 错误消息"
-                // pass
+                // done
                 // return
             }
         }
@@ -336,8 +336,8 @@ new FormTest().check('123', {
         }
     ]
 }, {
-    pass: function () {
-        console.info('regexp be-false pass')
+    done: function () {
+        console.info('regexp be-false done')
     }
 })
 ````
