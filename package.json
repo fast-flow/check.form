@@ -1,6 +1,6 @@
 {
   "name": "form-test",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "The form data validation library.Does not contain UI.",
   "main": "lib/index.js",
   "scripts": {
@@ -24,13 +24,14 @@
   },
   "homepage": "https://github.com/fast-flow/form-check#readme",
   "devDependencies": {
-    "jest": "^18.1.0"
+    "jest": "^18.1.0",
+    "json-loader": "^0.5.4"
   },
   "dependencies": {
     "extend": "^3.0.0",
     "mustache": "^2.3.0"
   },
   "jest": {
-      "testRegex": "(/__test__/.*|\\.(test|spec))\\.(ts|tsx|js)$"
+    "testRegex": "(/__test__/.*|\\.(test|spec))\\.(ts|tsx|js)$"
   }
 }

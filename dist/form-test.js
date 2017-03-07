@@ -66,6 +66,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Test.prototype.check = __webpack_require__(3)
 	Test.prototype.addRule = __webpack_require__(6)
 	Test.prototype.replaceRule = __webpack_require__(7)
+	Test.prototype.package = __webpack_require__(8)
 	module.exports = Test
 
 
@@ -275,6 +276,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }
 	    settings.tests.some(function (item, index) {
+	        if (typeof item === 'string') {
+	            item = {
+	                rule: item
+	            }
+	        }
 	        if (item.rule) {
 	            test(value, settings, self._rule[item.rule], emit)
 	        }
@@ -1149,6 +1155,48 @@ return /******/ (function(modules) { // webpackBootstrap
 	    self._rule[ruleName] = extend(true, self._rule[ruleName], extendRule)
 	}
 
+
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	module.exports = {
+		"name": "form-test",
+		"version": "0.3.0",
+		"description": "The form data validation library.Does not contain UI.",
+		"main": "lib/index.js",
+		"scripts": {
+			"build": "webpack",
+			"test-ci": "./node_modules/jest/bin/jest.js",
+			"test": "./node_modules/jest/bin/jest.js --watch"
+		},
+		"repository": {
+			"type": "git",
+			"url": "git+https://github.com/fast-flow/form-check.git"
+		},
+		"keywords": [
+			"form",
+			"validation",
+			"formcheck"
+		],
+		"author": "nimojs",
+		"license": "MIT",
+		"bugs": {
+			"url": "https://github.com/fast-flow/form-check/issues"
+		},
+		"homepage": "https://github.com/fast-flow/form-check#readme",
+		"devDependencies": {
+			"jest": "^18.1.0",
+			"json-loader": "^0.5.4"
+		},
+		"dependencies": {
+			"extend": "^3.0.0",
+			"mustache": "^2.3.0"
+		},
+		"jest": {
+			"testRegex": "(/__test__/.*|\\.(test|spec))\\.(ts|tsx|js)$"
+		}
+	};
 
 /***/ }
 /******/ ])
