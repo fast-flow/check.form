@@ -115,6 +115,24 @@ new Test().check('mail@qq.cc', {
 })
 ````
 
+## abbr
+
+````js
+console.info('---------- abbr -----------')
+new FormTest().check('123', {
+    name: '邮箱',
+    tests: [
+        'required',
+        'email'
+    ]
+}, {
+    fail: function (errors) {
+        console.log(errors[0])
+    }
+})
+````
+
+
 ## msg
 
 ````js
