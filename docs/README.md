@@ -156,7 +156,12 @@ new FormTest().check('123', {
 
 ## default rule
 
-`required` `email` `url` `easyurl` `mobile` `number`
+`required` `email` `url` `easyurl` `mobile` `number` `digits`
+
+> 00123450 是 digits 但不是 number
+> 1.23 是 number 但不是 digits
+> url: http://www.baidu.com
+> easyurl: www.baidu.com
 
 ## addRule
 

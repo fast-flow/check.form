@@ -177,6 +177,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        be: true,
 	        msg: '{{name}}的格式不正确'
 	    },
+	    'digits': {
+	        regexp: /^\s*\d+\s*$/,
+	        be: true,
+	        msg: '{{name}}的格式不正确'
+	    },
 	    'email': {
 	        regexp: /^\s*([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,20})\s*$/,
 	        be: true,
@@ -1317,7 +1322,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = {
 		"name": "form-test",
-		"version": "0.4.0",
+		"version": "0.5.0",
 		"description": "The form data validation library.Does not contain UI.",
 		"main": "lib/index.js",
 		"scripts": {
