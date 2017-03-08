@@ -300,16 +300,16 @@ new FormTest().check('123', {
 })
 ````
 
-## min-max
+## minLength-maxLength
 
 ````js
-console.info('---------- min-max -----------')
+console.info('---------- minLength-maxLength -----------')
 new FormTest().check('123', {
     name: '密码',
     tests: [
         {
             minLength: 5,
-            msg: '密码最少{{self.min}}位'
+            msg: '{{name}}最少{{self.minLength}}位'
         }
     ]
 }, {
@@ -317,7 +317,82 @@ new FormTest().check('123', {
         console.log(errors[0])
     }
 })
+new FormTest().check('1234', {
+    name: '密码',
+    tests: [
+        {
+            maxLength: 5,
+            msg: '{{name}}最多{{self.maxLength}}位'
+        }
+    ]
+}, {
+    fail: function (errors) {
+        console.log(errors[0])
+    }
+})
+new FormTest().check('1', {
+    name: '密码',
+    tests: [
+        {
+            maxLength: 5,
+            minLength: 2,
+            msg: '{{name}}请输入{{self.minLength}}~{{self.maxLength}}位'
+        }
+    ]
+}, {
+    fail: function (errors) {
+        console.log(errors[0])
+    }
+})
+new FormTest().check('123456', {
+    name: '密码',
+    tests: [
+        {
+            maxLength: 5,
+            minLength: 2,
+            msg: '{{name}}请输入{{self.minLength}}~{{self.maxLength}}位'
+        }
+    ]
+}, {
+    fail: function (errors) {
+        console.log(errors[0])
+    }
+})
+new FormTest().check('123', {
+    name: '密码',
+    tests: [
+        {
+            maxLength: 5,
+            minLength: 2,
+            msg: '{{name}}请输入{{self.minLength}}~{{self.maxLength}}位'
+        }
+    ]
+}, {
+    done: function (errors) {
+        console.info('value: 123 minLength maxLength pass')
+    }
+})
 ````
+
+## minLengthByte-maxLengthByte
+
+> like minLength maxLength
+
+```js
+{
+    minLengthByte: 2,
+    msg: '{{name}}请输入至少{{self.maxLengthByte}}个英文'
+}
+{
+    maxLengthByte: 5,
+    msg: '{{name}}最多允许{{self.maxLengthByte}}个英文'
+}
+{
+    maxLengthByte: 5,
+    minLengthByte: 2,
+    msg: '{{name}}请输入{{self.maxLengthByte}}~{{self.maxLengthByte}}位字节'
+}
+```
 
 ## regexp
 
