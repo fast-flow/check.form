@@ -242,6 +242,7 @@ it('minLengthByte 5', function () {
                             "errorMsg": "密码最少5位字节",
                             "rule": {
                                 "minLengthByte": 5,
+                                "minLengthByteChinese": 2,
                                 "msg": "密码最少{{self.minLengthByte}}位字节"
                             }
                         }
@@ -260,6 +261,7 @@ it('minLengthByte 5 has sapce', function () {
             tests: [
                 {
                     minLengthByte: 5,
+                    "minLengthByteChinese": 2,
                     msg: '密码最少{{self.minLength}}位字节'
                 }
             ]
@@ -290,6 +292,7 @@ it('minLengthByte 5 trim:true', function () {
                             "errorMsg": "密码最少5位字节",
                             "rule": {
                                 "minLengthByte": 5,
+                                "minLengthByteChinese": 2,
                                 "trim": true,
                                 "msg": "密码最少{{self.minLengthByte}}位字节"
                             }
@@ -310,6 +313,7 @@ it('maxLengthByte 10', function () {
             tests: [
                 {
                     maxLengthByte: 10,
+                    "maxLengthByteChinese": 5,
                     msg: '密码最多{{self.maxLengthByte}}位字节'
                 }
             ]
@@ -321,6 +325,7 @@ it('maxLengthByte 10', function () {
                             "errorMsg": "密码最多10位字节",
                             "rule": {
                                 "maxLengthByte": 10,
+                                "maxLengthByteChinese": 5,
                                 "msg": "密码最多{{self.maxLengthByte}}位字节"
                             }
                         }
@@ -368,6 +373,7 @@ it('maxLengthByte 10 trim:false', function () {
                             "errorMsg": "密码最多10位字节",
                             "rule": {
                                 "maxLengthByte": 10,
+                                "maxLengthByteChinese": 5,
                                 "msg": "密码最多{{self.maxLengthByte}}位字节"
                             }
                         }
@@ -419,6 +425,8 @@ it('minLengthByte maxLengthByte', function () {
                             "rule": {
                                 "maxLengthByte": 10,
                                 "minLengthByte": 5,
+                                "minLengthByteChinese": 2,
+                                "maxLengthByteChinese": 5,
                                 "msg": "{{name}}最少{{self.minLengthByte}}位字节，最多{{self.maxLengthByte}}位字节"
                             }
                         }
