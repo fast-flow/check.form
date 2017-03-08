@@ -254,7 +254,7 @@ new FormTest().check('abc', {
             msg: '{{name}}必须存在数字'
         },
         {
-            min: 5,
+            minLength: 5,
             msg: '{{name}}必须大于或等于5位'
         },
         {
@@ -308,7 +308,7 @@ new FormTest().check('123', {
     name: '密码',
     tests: [
         {
-            min: 5,
+            minLength: 5,
             msg: '密码最少{{self.min}}位'
         }
     ]
