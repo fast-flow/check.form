@@ -378,6 +378,23 @@ new FormTest().check('123', {
 
 > like minLength maxLength
 
+````js
+new FormTest().check('123', {
+    name: '密码',
+    tests: [
+        {
+            minLengthByte: 5,
+            msg: '{{name}}最少{{self.minLengthByte}}位英文，{{self.minLengthByteChinese}}位中文'
+        }
+    ]
+}, {
+    fail: function (errors) {
+        console.log(errors[0])
+    }
+})
+
+````
+
 ```js
 {
     minLengthByte: 2,
@@ -396,7 +413,7 @@ new FormTest().check('123', {
 
 ## regexp
 
-## be-true
+### be-true
 
 ````js
 console.info('---------- regexp -----------')
