@@ -1,5 +1,99 @@
 var Test = require('../lib/index')
 var test = new Test()
+it('min 5 value 2', function () {
+    return new Promise(function (resolve, reject) {
+        test.check('2', {
+            name: '密码',
+            tests: [
+                {
+                    min: 5,
+                    msg: '必须大于{{self.min}}'
+                }
+            ]
+        }, {
+            fail: function (errors) {
+                expect(errors).toEqual(
+                        [{"errorMsg": "必须大于5", "rule": {"min": 5, "msg": "必须大于{{self.min}}"}}]
+                )
+                resolve()
+            }
+        })
+    })
+})
+it('min 5 value 5', function () {
+    return new Promise(function (resolve, reject) {
+        test.check('5', {
+            name: '密码',
+            tests: [
+                {
+                    min: 5,
+                    msg: '必须大于{{self.min}}'
+                }
+            ]
+        }, {
+            done: function (errors) {
+                resolve()
+            }
+        })
+    })
+})
+it('max 5 value 6', function () {
+    return new Promise(function (resolve, reject) {
+        test.check('6', {
+            name: '密码',
+            tests: [
+                {
+                    max: 5,
+                    msg: '必须小于或等于{{self.max}}'
+                }
+            ]
+        }, {
+            fail: function (errors) {
+                expect(errors).toEqual(
+                    [{"errorMsg": "必须小于或等于5", "rule": {"max": 5, "msg": "必须小于或等于{{self.max}}"}}]
+                )
+                resolve()
+            }
+        })
+    })
+})
+
+it('max 5 value 4', function () {
+    return new Promise(function (resolve, reject) {
+        test.check('4', {
+            name: '密码',
+            tests: [
+                {
+                    max: 5,
+                    msg: '必须小于或等于{{self.max}}'
+                }
+            ]
+        }, {
+            done: function () {
+                resolve()
+            }
+        })
+    })
+})
+it('min 2 max 5 value 4', function () {
+    return new Promise(function (resolve, reject) {
+        test.check('4', {
+            name: '密码',
+            tests: [
+                {
+                    max: 5,
+                    min: 2,
+                    msg: '必须大于{{self.min}}并小于{{self.max}}'
+                }
+            ]
+        }, {
+            done: function (errors) {
+                resolve()
+            }
+        })
+    })
+})
+
 it('minLength 5', function () {
     return new Promise(function (resolve, reject) {
         test.check('123', {
