@@ -6,7 +6,7 @@
 
 ````js
 var Test = require('form-test')
-console.info('---------- required -----------')
+console.info('\n\n\n---------- required -----------')
 new Test().check('some', {
     name: 'user',
     tests: [
@@ -49,7 +49,7 @@ new Test().check('', {
 ## email
 
 ````js
-console.info('---------- email -----------')
+console.info('\n\n\n---------- email -----------')
 new Test().check('', {
     name: 'user email',
     tests: [
@@ -118,7 +118,7 @@ new Test().check('mail@qq.cc', {
 ## abbr
 
 ````js
-console.info('---------- abbr -----------')
+console.info('\n\n\n---------- abbr -----------')
 new FormTest().check('123', {
     name: '邮箱',
     tests: [
@@ -136,7 +136,7 @@ new FormTest().check('123', {
 ## msg
 
 ````js
-console.info('---------- msg -----------')
+console.info('\n\n\n---------- msg -----------')
 new FormTest().check('123', {
     name: '用户名',
     tests: [
@@ -156,12 +156,12 @@ new FormTest().check('123', {
 
 ## default rule
 
-`required` `email` `url` `easyurl` `mobile`
+`required` `email` `url` `easyurl` `mobile` `number`
 
 ## addRule
 
 ````js
-console.info('---------- addRule -----------')
+console.info('\n\n\n---------- addRule -----------')
 var test = new FormTest()
 test.addRule('sensitiveWord', {
     regexp: /(yamadie|yikuyiku)/,
@@ -186,7 +186,7 @@ test.check('yamadie', {
 ## async
 
 ````js
-console.info('---------- async -----------')
+console.info('\n\n\n---------- async -----------')
 new FormTest().check('abc', {
     tests: [
         {
@@ -211,7 +211,7 @@ new FormTest().check('abc', {
 ## equal
 
 ````js
-console.info('---------- equal -----------')
+console.info('\n\n\n---------- equal -----------')
 new FormTest().check('123', {
     name: '重复密码',
     tests: [
@@ -243,7 +243,7 @@ new FormTest().check('123', {
 ## every
 
 ````js
-console.info('---------- every -----------')
+console.info('\n\n\n---------- every -----------')
 new FormTest().check('abc', {
     name: '用户名',
     every: true,
@@ -280,7 +280,7 @@ new FormTest().check('abc', {
 ## fn
 
 ````js
-console.info('---------- fn -----------')
+console.info('\n\n\n---------- fn -----------')
 new FormTest().check('123', {
     name: '函数校验',
     tests: [
@@ -300,10 +300,84 @@ new FormTest().check('123', {
 })
 ````
 
+## max min
+
+
+````js
+console.info('\n\n\n---------- min-max -----------')
+new FormTest().check(1, {
+    name: '数量',
+    tests: [
+        {
+            rule: 'number'
+        },
+        {
+            min: 2,
+            msg: '{{name}}最小{{self.min}}'
+        }
+    ]
+}, {
+    fail: function (errors) {
+        console.log(errors[0])
+    }
+})
+
+new FormTest().check('aa', {
+    name: '数量',
+    tests: [
+        {
+            rule: 'number',
+            msg: '{{name}}必须输入数字'
+        },
+        {
+            min: 2,
+            msg: '{{name}}最小{{self.min}}'
+        }
+    ]
+}, {
+    fail: function (errors) {
+        console.log(errors[0])
+    }
+})
+new FormTest().check(6, {
+    name: '数量',
+    tests: [
+        {
+            rule: 'number'
+        },
+        {
+            max: 5,
+            msg: '{{name}}最大{{self.max}}'
+        }
+    ]
+}, {
+    fail: function (errors) {
+        console.log(errors[0])
+    }
+})
+new FormTest().check(6, {
+    name: '数量',
+    tests: [
+        {
+            rule: 'number'
+        },
+        {
+            max: 5,
+            min: 2,
+            msg: '{{name}}必须是{{self.min}}~{{self.max}}'
+        }
+    ]
+}, {
+    fail: function (errors) {
+        console.log(errors[0])
+    }
+})
+````
+
 ## minLength-maxLength
 
 ````js
-console.info('---------- minLength-maxLength -----------')
+console.info('\n\n\n---------- minLength-maxLength -----------')
 new FormTest().check('123', {
     name: '密码',
     tests: [
@@ -416,7 +490,7 @@ new FormTest().check('123', {
 ### be-true
 
 ````js
-console.info('---------- regexp -----------')
+console.info('\n\n\n---------- regexp -----------')
 new FormTest().check('123', {
     name: '用户名',
     tests: [
@@ -455,7 +529,7 @@ new FormTest().check('123', {
 ## replaceRule
 
 ````js
-console.info('---------- replaceRule -----------')
+console.info('\n\n\n---------- replaceRule -----------')
 var test = new FormTest()
 test.addRule('sensitiveWord', {
     regexp: /(yamadie|yikuyiku)/,

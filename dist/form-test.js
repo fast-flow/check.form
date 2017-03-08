@@ -172,6 +172,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        be: true,
 	        msg: '请输入{{name}}'
 	    },
+	    'number': {
+	        regexp: /^[+-]?[1-9][0-9]*(\.[0-9]+)?([eE][+-][1-9][0-9]*)?$|^[+-]?0?\.[0-9]+([eE][+-][1-9][0-9]*)?$|^0$/,
+	        be: true,
+	        msg: '{{name}}的格式不正确'
+	    },
 	    'email': {
 	        regexp: /^\s*([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,20})\s*$/,
 	        be: true,
@@ -453,6 +458,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	                })
 	            }
 	        },
+	        min: function (value) {
+	            if (value >= rule.min) {
+	                emit({
+	                    type: 'SYNC_DONE',
+	                    rule: rule
+	                })
+	            }
+	            else {
+	                emit({
+	                    type: 'SYNC_FAIL',
+	                    rule: rule,
+	                    errorMsg: renderMsg(rule.msg, errorMsgRenderData)
+	                })
+	            }
+	        },
 	        maxLengthByte: function () {
 	            let length = byteLength(value)
 	            if (length <= rule.maxLengthByte) {
@@ -471,6 +491,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 	        maxLength: function () {
 	            if (value.length <= rule.maxLength) {
+	                emit({
+	                    type: 'SYNC_DONE',
+	                    rule: rule
+	                })
+	            }
+	            else {
+	                emit({
+	                    type: 'SYNC_FAIL',
+	                    rule: rule,
+	                    errorMsg: renderMsg(rule.msg, errorMsgRenderData)
+	                })
+	            }
+	        },
+	        max: function (value) {
+	            if (value <= rule.max) {
 	                emit({
 	                    type: 'SYNC_DONE',
 	                    rule: rule
@@ -514,6 +549,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    errorMsg: renderMsg(rule.msg, errorMsgRenderData)
 	                })
 	            }
+	        },
+	        minmax: function (value) {
+	            if (value >= rule.min && value <= rule.max) {
+	                emit({
+	                    type: 'SYNC_DONE',
+	                    rule: rule
+	                })
+	            }
+	            else {
+	                emit({
+	                    type: 'SYNC_FAIL',
+	                    rule: rule,
+	                    errorMsg: renderMsg(rule.msg, errorMsgRenderData)
+	                })
+	            }
 	        }
 	    }
 	
@@ -530,7 +580,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    // {minLength:5} {maxLength:10} {minLength:5,maxLength:10}
 	    if (rule.minLength || rule.maxLength) {
-	        match = true
 	        if (rule.minLength && !rule.maxLength) {
 	            hasMinMaxAttr.minLength()
 	        }
@@ -542,9 +591,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	            hasMinMaxAttr.minmaxLength()
 	        }
 	    }
+	    else if (rule.max || rule.min) {
+	        value = parseFloat(value)
+	        if (isNaN(value)) {
+	            emit({
+	                type: 'SYNC_FAIL',
+	                rule: rule,
+	                errorMsg: renderMsg('Please enter the Numbers', errorMsgRenderData)
+	            })
+	            if (typeof window !== 'undefined') {
+	                if (typeof window.log !== 'undefined') {
+	                    console.log('value is NaN, please use the [{rule: "number"}, {max: 5}]. https://github.com/fast-flow/form-test/issues/6')
+	                }
+	            }
+	            return
+	        }
+	        if (rule.min && !rule.max) {
+	            hasMinMaxAttr.min(value)
+	        }
+	        else if (rule.max && !rule.min) {
+	            hasMinMaxAttr.max(value)
+	        }
+	        // {min:5, max:10}
+	        else {
+	            hasMinMaxAttr.minmax(value)
+	        }
+	
+	    }
 	    // {minLengthByte:5} {maxLengthByte:10} {minLengthByte:5,maxLengthByte:10}
 	    else if (rule.minLengthByte || rule.maxLengthByte) {
-	        match = true
 	        if (rule.minLengthByte && !rule.maxLengthByte) {
 	            hasMinMaxAttr.minLengthByte()
 	        }
