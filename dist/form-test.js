@@ -172,6 +172,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        be: true,
 	        msg: '请输入{{name}}'
 	    },
+	    'number': {
+	        regexp: /^[+-]?[1-9][0-9]*(\.[0-9]+)?([eE][+-][1-9][0-9]*)?$|^[+-]?0?\.[0-9]+([eE][+-][1-9][0-9]*)?$|^0$/,
+	        be: true,
+	        msg: '{{name}}的格式不正确'
+	    },
+	    'digits': {
+	        regexp: /^\s*\d+\s*$/,
+	        be: true,
+	        msg: '{{name}}的格式不正确'
+	    },
 	    'email': {
 	        regexp: /^\s*([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,20})\s*$/,
 	        be: true,
@@ -241,12 +251,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    var emit = function (action) {
 	        switch (action.type) {
-	            case 'SYNC_done':
+	            case 'SYNC_DONE':
 	                stat.sync.done.push({
 	                    rule: action.rule
 	                })
 	            break
-	            case "ASYNC_done":
+	            case "ASYNC_DONE":
 	                stat.async.done.push({
 	                    rule: action.rule
 	                })
@@ -319,7 +329,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	var renderMsg = function (template, data) {
 	     template = template || ''
+	     // 不要删除此段代码，永远保持向前兼容
+	     if (data.self.maxLengthByte) {
+	         data.self.maxLengthByteChinese = Math.floor(data.self.maxLengthByte / 2)
+	     }
+	     if (data.self.minLengthByte) {
+	         data.self.minLengthByteChinese = Math.floor(data.self.minLengthByte / 2)
+	     }
 	     return Mustache.render(template, data)
+	}
+	var byteLength = function(str) {
+		var byteLen = 0
+		for(var i = 0; i<str.length; i++){
+			if(str.charCodeAt(i)>255){
+				byteLen += 2
+			}else{
+				byteLen++
+			}
+	　　 }
+		return byteLen
 	}
 	module.exports = function test (value, settings, rule, emit) {
 	    if (rule.trim) {
@@ -334,7 +362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            test: function () {
 	                if (rule.regexp.test(value) === rule.be) {
 	                    emit({
-	                        type: 'SYNC_done',
+	                        type: 'SYNC_DONE',
 	                        rule: rule
 	                    })
 	                }
@@ -352,7 +380,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            test: function () {
 	                if (rule.equal === value) {
 	                    emit({
-	                        type: 'SYNC_done',
+	                        type: 'SYNC_DONE',
 	                        rule: rule
 	                    })
 	                }
@@ -371,7 +399,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var errorMsg = rule.fn(value)
 	                if (!errorMsg) {
 	                    emit({
-	                        type: 'SYNC_done',
+	                        type: 'SYNC_DONE',
 	                        rule: rule
 	                    })
 	                }
@@ -390,7 +418,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var p = new Promise(rule.async)
 	                p.then(function () {
 	                    emit({
-	                        type: 'ASYNC_done',
+	                        type: 'ASYNC_DONE',
 	                        rule: rule
 	                    })
 	                }, function (errorMsg) {
@@ -404,10 +432,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    ]
 	    var hasMinMaxAttr = {
-	        min: function () {
-	            if (value.length >= rule.min) {
+	        minLengthByte: function () {
+	            let length = byteLength(value)
+	            if (length >= rule.minLengthByte) {
 	                emit({
-	                    type: 'SYNC_done',
+	                    type: 'SYNC_DONE',
 	                    rule: rule
 	                })
 	            }
@@ -419,10 +448,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                })
 	            }
 	        },
-	        max: function () {
-	            if (value.length <= rule.max) {
+	        minLength: function () {
+	            if (value.length >= rule.minLength) {
 	                emit({
-	                    type: 'SYNC_done',
+	                    type: 'SYNC_DONE',
 	                    rule: rule
 	                })
 	            }
@@ -434,10 +463,102 @@ return /******/ (function(modules) { // webpackBootstrap
 	                })
 	            }
 	        },
-	        minmax: function () {
-	            if (value.length >= rule.min && value.length <= rule.max) {
+	        min: function (value) {
+	            if (value >= rule.min) {
 	                emit({
-	                    type: 'SYNC_done',
+	                    type: 'SYNC_DONE',
+	                    rule: rule
+	                })
+	            }
+	            else {
+	                emit({
+	                    type: 'SYNC_FAIL',
+	                    rule: rule,
+	                    errorMsg: renderMsg(rule.msg, errorMsgRenderData)
+	                })
+	            }
+	        },
+	        maxLengthByte: function () {
+	            let length = byteLength(value)
+	            if (length <= rule.maxLengthByte) {
+	                emit({
+	                    type: 'SYNC_DONE',
+	                    rule: rule
+	                })
+	            }
+	            else {
+	                emit({
+	                    type: 'SYNC_FAIL',
+	                    rule: rule,
+	                    errorMsg: renderMsg(rule.msg, errorMsgRenderData)
+	                })
+	            }
+	        },
+	        maxLength: function () {
+	            if (value.length <= rule.maxLength) {
+	                emit({
+	                    type: 'SYNC_DONE',
+	                    rule: rule
+	                })
+	            }
+	            else {
+	                emit({
+	                    type: 'SYNC_FAIL',
+	                    rule: rule,
+	                    errorMsg: renderMsg(rule.msg, errorMsgRenderData)
+	                })
+	            }
+	        },
+	        max: function (value) {
+	            if (value <= rule.max) {
+	                emit({
+	                    type: 'SYNC_DONE',
+	                    rule: rule
+	                })
+	            }
+	            else {
+	                emit({
+	                    type: 'SYNC_FAIL',
+	                    rule: rule,
+	                    errorMsg: renderMsg(rule.msg, errorMsgRenderData)
+	                })
+	            }
+	        },
+	        minmaxLengthByte: function () {
+	            let length = byteLength(value)
+	            if (length >= rule.minLengthByte && length <= rule.maxLengthByte) {
+	                emit({
+	                    type: 'SYNC_DONE',
+	                    rule: rule
+	                })
+	            }
+	            else {
+	                emit({
+	                    type: 'SYNC_FAIL',
+	                    rule: rule,
+	                    errorMsg: renderMsg(rule.msg, errorMsgRenderData)
+	                })
+	            }
+	        },
+	        minmaxLength: function () {
+	            if (value.length >= rule.minLength && value.length <= rule.maxLength) {
+	                emit({
+	                    type: 'SYNC_DONE',
+	                    rule: rule
+	                })
+	            }
+	            else {
+	                emit({
+	                    type: 'SYNC_FAIL',
+	                    rule: rule,
+	                    errorMsg: renderMsg(rule.msg, errorMsgRenderData)
+	                })
+	            }
+	        },
+	        minmax: function (value) {
+	            if (value >= rule.min && value <= rule.max) {
+	                emit({
+	                    type: 'SYNC_DONE',
 	                    rule: rule
 	                })
 	            }
@@ -462,18 +583,57 @@ return /******/ (function(modules) { // webpackBootstrap
 	        })
 	    }
 	
-	    // {min:5} {max:10} {min:5,max:10}
-	    if (rule.min || rule.max) {
-	        match = true
+	    // {minLength:5} {maxLength:10} {minLength:5,maxLength:10}
+	    if (rule.minLength || rule.maxLength) {
+	        if (rule.minLength && !rule.maxLength) {
+	            hasMinMaxAttr.minLength()
+	        }
+	        else if (rule.maxLength && !rule.minLength) {
+	            hasMinMaxAttr.maxLength()
+	        }
+	        // {minLength:5, maxLength:10}
+	        else {
+	            hasMinMaxAttr.minmaxLength()
+	        }
+	    }
+	    else if (rule.max || rule.min) {
+	        value = parseFloat(value)
+	        if (isNaN(value)) {
+	            emit({
+	                type: 'SYNC_FAIL',
+	                rule: rule,
+	                errorMsg: renderMsg('Please enter the Numbers', errorMsgRenderData)
+	            })
+	            if (typeof window !== 'undefined') {
+	                if (typeof window.log !== 'undefined') {
+	                    console.log('value is NaN, please use the [{rule: "number"}, {max: 5}]. https://github.com/fast-flow/form-test/issues/6')
+	                }
+	            }
+	            return
+	        }
 	        if (rule.min && !rule.max) {
-	            hasMinMaxAttr.min()
+	            hasMinMaxAttr.min(value)
 	        }
 	        else if (rule.max && !rule.min) {
-	            hasMinMaxAttr.max()
+	            hasMinMaxAttr.max(value)
 	        }
 	        // {min:5, max:10}
 	        else {
-	            hasMinMaxAttr.minmax()
+	            hasMinMaxAttr.minmax(value)
+	        }
+	
+	    }
+	    // {minLengthByte:5} {maxLengthByte:10} {minLengthByte:5,maxLengthByte:10}
+	    else if (rule.minLengthByte || rule.maxLengthByte) {
+	        if (rule.minLengthByte && !rule.maxLengthByte) {
+	            hasMinMaxAttr.minLengthByte()
+	        }
+	        else if (rule.maxLengthByte && !rule.minLengthByte) {
+	            hasMinMaxAttr.maxLengthByte()
+	        }
+	        // {minLengthByte:5, maxLengthByte:10}
+	        else {
+	            hasMinMaxAttr.minmaxLengthByte()
 	        }
 	    }
 	    else {
@@ -1162,7 +1322,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = {
 		"name": "form-test",
-		"version": "0.3.0",
+		"version": "0.5.0",
 		"description": "The form data validation library.Does not contain UI.",
 		"main": "lib/index.js",
 		"scripts": {

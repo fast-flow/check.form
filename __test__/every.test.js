@@ -132,8 +132,8 @@ it('debug', function () {
                     msg: '{{name}}必须存在数字'
                 },
                 {
-                    min: 5,
-                    msg: '{{name}}必须大于或等于5位'
+                    minLength: 5,
+                    msg: '{{name}}必须大于或等于{{self.minLength}}位'
                 },
                 {
                     async: function (done, fail) {
@@ -162,8 +162,8 @@ it('debug', function () {
                         },
                         {
                             rule: {
-                                min: 5,
-                                msg: '{{name}}必须大于或等于5位'
+                                minLength: 5,
+                                msg: '{{name}}必须大于或等于{{self.minLength}}位'
                             },
                             errorMsg: '用户名必须大于或等于5位'
                         }

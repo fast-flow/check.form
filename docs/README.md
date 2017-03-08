@@ -6,7 +6,7 @@
 
 ````js
 var Test = require('form-test')
-console.info('---------- required -----------')
+console.info('\n\n\n---------- required -----------')
 new Test().check('some', {
     name: 'user',
     tests: [
@@ -49,7 +49,7 @@ new Test().check('', {
 ## email
 
 ````js
-console.info('---------- email -----------')
+console.info('\n\n\n---------- email -----------')
 new Test().check('', {
     name: 'user email',
     tests: [
@@ -118,7 +118,7 @@ new Test().check('mail@qq.cc', {
 ## abbr
 
 ````js
-console.info('---------- abbr -----------')
+console.info('\n\n\n---------- abbr -----------')
 new FormTest().check('123', {
     name: '邮箱',
     tests: [
@@ -136,7 +136,7 @@ new FormTest().check('123', {
 ## msg
 
 ````js
-console.info('---------- msg -----------')
+console.info('\n\n\n---------- msg -----------')
 new FormTest().check('123', {
     name: '用户名',
     tests: [
@@ -156,12 +156,17 @@ new FormTest().check('123', {
 
 ## default rule
 
-`required` `email` `url` `easyurl` `mobile`
+`required` `email` `url` `easyurl` `mobile` `number` `digits`
+
+> 00123450 是 digits 但不是 number
+> 1.23 是 number 但不是 digits
+> url: http://www.baidu.com
+> easyurl: www.baidu.com
 
 ## addRule
 
 ````js
-console.info('---------- addRule -----------')
+console.info('\n\n\n---------- addRule -----------')
 var test = new FormTest()
 test.addRule('sensitiveWord', {
     regexp: /(yamadie|yikuyiku)/,
@@ -186,7 +191,7 @@ test.check('yamadie', {
 ## async
 
 ````js
-console.info('---------- async -----------')
+console.info('\n\n\n---------- async -----------')
 new FormTest().check('abc', {
     tests: [
         {
@@ -211,7 +216,7 @@ new FormTest().check('abc', {
 ## equal
 
 ````js
-console.info('---------- equal -----------')
+console.info('\n\n\n---------- equal -----------')
 new FormTest().check('123', {
     name: '重复密码',
     tests: [
@@ -243,7 +248,7 @@ new FormTest().check('123', {
 ## every
 
 ````js
-console.info('---------- every -----------')
+console.info('\n\n\n---------- every -----------')
 new FormTest().check('abc', {
     name: '用户名',
     every: true,
@@ -254,7 +259,7 @@ new FormTest().check('abc', {
             msg: '{{name}}必须存在数字'
         },
         {
-            min: 5,
+            minLength: 5,
             msg: '{{name}}必须大于或等于5位'
         },
         {
@@ -280,7 +285,7 @@ new FormTest().check('abc', {
 ## fn
 
 ````js
-console.info('---------- fn -----------')
+console.info('\n\n\n---------- fn -----------')
 new FormTest().check('123', {
     name: '函数校验',
     tests: [
@@ -300,16 +305,71 @@ new FormTest().check('123', {
 })
 ````
 
-## min-max
+## max min
+
 
 ````js
-console.info('---------- min-max -----------')
-new FormTest().check('123', {
-    name: '密码',
+console.info('\n\n\n---------- min-max -----------')
+new FormTest().check(1, {
+    name: '数量',
     tests: [
         {
-            min: 5,
-            msg: '密码最少{{self.min}}位'
+            rule: 'number'
+        },
+        {
+            min: 2,
+            msg: '{{name}}最小{{self.min}}'
+        }
+    ]
+}, {
+    fail: function (errors) {
+        console.log(errors[0])
+    }
+})
+
+new FormTest().check('aa', {
+    name: '数量',
+    tests: [
+        {
+            rule: 'number',
+            msg: '{{name}}必须输入数字'
+        },
+        {
+            min: 2,
+            msg: '{{name}}最小{{self.min}}'
+        }
+    ]
+}, {
+    fail: function (errors) {
+        console.log(errors[0])
+    }
+})
+new FormTest().check(6, {
+    name: '数量',
+    tests: [
+        {
+            rule: 'number'
+        },
+        {
+            max: 5,
+            msg: '{{name}}最大{{self.max}}'
+        }
+    ]
+}, {
+    fail: function (errors) {
+        console.log(errors[0])
+    }
+})
+new FormTest().check(6, {
+    name: '数量',
+    tests: [
+        {
+            rule: 'number'
+        },
+        {
+            max: 5,
+            min: 2,
+            msg: '{{name}}必须是{{self.min}}~{{self.max}}'
         }
     ]
 }, {
@@ -319,12 +379,123 @@ new FormTest().check('123', {
 })
 ````
 
-## regexp
-
-## be-true
+## minLength-maxLength
 
 ````js
-console.info('---------- regexp -----------')
+console.info('\n\n\n---------- minLength-maxLength -----------')
+new FormTest().check('123', {
+    name: '密码',
+    tests: [
+        {
+            minLength: 5,
+            msg: '{{name}}最少{{self.minLength}}位'
+        }
+    ]
+}, {
+    fail: function (errors) {
+        console.log(errors[0])
+    }
+})
+new FormTest().check('1234', {
+    name: '密码',
+    tests: [
+        {
+            maxLength: 5,
+            msg: '{{name}}最多{{self.maxLength}}位'
+        }
+    ]
+}, {
+    fail: function (errors) {
+        console.log(errors[0])
+    }
+})
+new FormTest().check('1', {
+    name: '密码',
+    tests: [
+        {
+            maxLength: 5,
+            minLength: 2,
+            msg: '{{name}}请输入{{self.minLength}}~{{self.maxLength}}位'
+        }
+    ]
+}, {
+    fail: function (errors) {
+        console.log(errors[0])
+    }
+})
+new FormTest().check('123456', {
+    name: '密码',
+    tests: [
+        {
+            maxLength: 5,
+            minLength: 2,
+            msg: '{{name}}请输入{{self.minLength}}~{{self.maxLength}}位'
+        }
+    ]
+}, {
+    fail: function (errors) {
+        console.log(errors[0])
+    }
+})
+new FormTest().check('123', {
+    name: '密码',
+    tests: [
+        {
+            maxLength: 5,
+            minLength: 2,
+            msg: '{{name}}请输入{{self.minLength}}~{{self.maxLength}}位'
+        }
+    ]
+}, {
+    done: function (errors) {
+        console.info('value: 123 minLength maxLength pass')
+    }
+})
+````
+
+## minLengthByte-maxLengthByte
+
+> like minLength maxLength
+
+````js
+new FormTest().check('123', {
+    name: '密码',
+    tests: [
+        {
+            minLengthByte: 5,
+            msg: '{{name}}最少{{self.minLengthByte}}位英文，{{self.minLengthByteChinese}}位中文'
+        }
+    ]
+}, {
+    fail: function (errors) {
+        console.log(errors[0])
+    }
+})
+
+````
+
+```js
+{
+    minLengthByte: 2,
+    msg: '{{name}}请输入至少{{self.maxLengthByte}}个英文'
+}
+{
+    maxLengthByte: 5,
+    msg: '{{name}}最多允许{{self.maxLengthByte}}个英文'
+}
+{
+    maxLengthByte: 5,
+    minLengthByte: 2,
+    msg: '{{name}}请输入{{self.maxLengthByte}}~{{self.maxLengthByte}}位字节'
+}
+```
+
+## regexp
+
+### be-true
+
+````js
+console.info('\n\n\n---------- regexp -----------')
 new FormTest().check('123', {
     name: '用户名',
     tests: [
@@ -363,7 +534,7 @@ new FormTest().check('123', {
 ## replaceRule
 
 ````js
-console.info('---------- replaceRule -----------')
+console.info('\n\n\n---------- replaceRule -----------')
 var test = new FormTest()
 test.addRule('sensitiveWord', {
     regexp: /(yamadie|yikuyiku)/,
