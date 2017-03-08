@@ -224,3 +224,228 @@ it('minLength maxLength', function () {
          })
      })
 })
+it('minLengthByte 5', function () {
+    return new Promise(function (resolve, reject) {
+        test.check('12搜', {
+            name: '密码',
+            tests: [
+                {
+                    minLengthByte: 5,
+                    msg: '密码最少{{self.minLengthByte}}位字节'
+                }
+            ]
+        }, {
+            fail: function (errors) {
+                expect(errors).toEqual(
+                    [
+                        {
+                            "errorMsg": "密码最少5位字节",
+                            "rule": {
+                                "minLengthByte": 5,
+                                "msg": "密码最少{{self.minLengthByte}}位字节"
+                            }
+                        }
+                    ]
+                )
+                resolve()
+            }
+        })
+    })
+})
+
+it('minLengthByte 5 has sapce', function () {
+    return new Promise(function (resolve, reject) {
+        test.check('      12是        ', {
+            name: '密码',
+            tests: [
+                {
+                    minLengthByte: 5,
+                    msg: '密码最少{{self.minLength}}位字节'
+                }
+            ]
+        }, {
+            done: function (errors) {
+                resolve()
+            }
+        })
+    })
+})
+
+it('minLengthByte 5 trim:true', function () {
+    return new Promise(function (resolve, reject) {
+        test.check('     12是     ', {
+            name: '密码',
+            tests: [
+                {
+                    minLengthByte: 5,
+                    trim: true,
+                    msg: '密码最少{{self.minLengthByte}}位字节'
+                }
+            ]
+        }, {
+            fail: function (errors) {
+                expect(errors).toEqual(
+                    [
+                        {
+                            "errorMsg": "密码最少5位字节",
+                            "rule": {
+                                "minLengthByte": 5,
+                                "trim": true,
+                                "msg": "密码最少{{self.minLengthByte}}位字节"
+                            }
+                        }
+                    ]
+                )
+                resolve()
+            }
+        })
+    })
+})
+
+
+it('maxLengthByte 10', function () {
+    return new Promise(function (resolve, reject) {
+        test.check('一二33四五六', {
+            name: '密码',
+            tests: [
+                {
+                    maxLengthByte: 10,
+                    msg: '密码最多{{self.maxLengthByte}}位字节'
+                }
+            ]
+        }, {
+            fail: function (errors) {
+                expect(errors).toEqual(
+                    [
+                        {
+                            "errorMsg": "密码最多10位字节",
+                            "rule": {
+                                "maxLengthByte": 10,
+                                "msg": "密码最多{{self.maxLengthByte}}位字节"
+                            }
+                        }
+                    ]
+                )
+                resolve()
+            }
+        })
+    })
+})
+
+it('maxLengthByte 10 "1234"', function () {
+    return new Promise(function (resolve, reject) {
+        test.check('1234', {
+            name: '密码',
+            tests: [
+                {
+                    maxLengthByte: 10,
+                    msg: '密码最多{{self.maxLengthByte}}位字节'
+                }
+            ]
+        }, {
+            done: function (errors) {
+                resolve()
+            }
+        })
+    })
+})
+
+it('maxLengthByte 10 trim:false', function () {
+    return new Promise(function (resolve, reject) {
+        test.check('12343            ', {
+            name: '密码',
+            tests: [
+                {
+                    maxLengthByte: 10,
+                    msg: '密码最多{{self.maxLengthByte}}位字节'
+                }
+            ]
+        }, {
+            fail: function (errors) {
+                expect(errors).toEqual(
+                    [
+                        {
+                            "errorMsg": "密码最多10位字节",
+                            "rule": {
+                                "maxLengthByte": 10,
+                                "msg": "密码最多{{self.maxLengthByte}}位字节"
+                            }
+                        }
+                    ]
+                )
+                resolve()
+            }
+        })
+    })
+})
+
+it('maxLength 10 trim:true', function () {
+    return new Promise(function (resolve, reject) {
+        test.check('搜索搜索            ', {
+            name: '密码',
+            tests: [
+                {
+                    maxLengthByte: 10,
+                    trim: true,
+                    msg: '密码最多{{self.maxLength}}位字节'
+                }
+            ]
+        }, {
+            done: function () {
+                resolve()
+            }
+        })
+    })
+})
+
+
+it('minLengthByte maxLengthByte', function () {
+     return new Promise(function (resolve, reject) {
+         test.check('123' ,{
+             name: '密码',
+             tests: [
+                 {
+                     minLengthByte: 5,
+                     maxLengthByte: 10,
+                     msg: '{{name}}最少{{self.minLengthByte}}位字节，最多{{self.maxLengthByte}}位字节'
+                 }
+             ]
+         }, {
+             fail: function (errors) {
+                 expect(errors).toEqual(
+                     [
+                        {
+                            "errorMsg": "密码最少5位字节，最多10位字节",
+                            "rule": {
+                                "maxLengthByte": 10,
+                                "minLengthByte": 5,
+                                "msg": "{{name}}最少{{self.minLengthByte}}位字节，最多{{self.maxLengthByte}}位字节"
+                            }
+                        }
+                    ]
+                 )
+                 resolve()
+             }
+         })
+     }).then(function () {
+         return new Promise(function(resolve, reject) {
+             test.check('1234567' ,{
+                 name: '密码',
+                 tests: [
+                     {
+                         minLengthByte: 5,
+                         maxLengthByte: 10,
+                         msg: '{{name}}最少{{self.minLengthByte}}位字节，最多{{self.maxLengthByte}}位字节'
+                     }
+                 ]
+             }, {
+                 done: function (errors) {
+                     resolve()
+                 },
+                 fail: function () {
+                     reject()
+                 }
+             })
+         })
+     })
+})

@@ -404,8 +404,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    ]
 	    var hasMinMaxAttr = {
-	        min: function () {
-	            if (value.length >= rule.min) {
+	        minLength: function () {
+	            if (value.length >= rule.minLength) {
 	                emit({
 	                    type: 'SYNC_done',
 	                    rule: rule
@@ -419,8 +419,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                })
 	            }
 	        },
-	        max: function () {
-	            if (value.length <= rule.max) {
+	        maxLength: function () {
+	            if (value.length <= rule.maxLength) {
 	                emit({
 	                    type: 'SYNC_done',
 	                    rule: rule
@@ -434,8 +434,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                })
 	            }
 	        },
-	        minmax: function () {
-	            if (value.length >= rule.min && value.length <= rule.max) {
+	        minmaxLength: function () {
+	            if (value.length >= rule.minLength && value.length <= rule.maxLength) {
 	                emit({
 	                    type: 'SYNC_done',
 	                    rule: rule
@@ -462,18 +462,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        })
 	    }
 	
-	    // {min:5} {max:10} {min:5,max:10}
-	    if (rule.min || rule.max) {
+	    // {minLength:5} {maxLength:10} {minLength:5,maxLength:10}
+	    if (rule.minLength || rule.maxLength) {
 	        match = true
 	        if (rule.min && !rule.max) {
-	            hasMinMaxAttr.min()
+	            hasMinMaxAttr.minLength()
 	        }
 	        else if (rule.max && !rule.min) {
-	            hasMinMaxAttr.max()
+	            hasMinMaxAttr.maxLength()
 	        }
 	        // {min:5, max:10}
 	        else {
-	            hasMinMaxAttr.minmax()
+	            hasMinMaxAttr.minmaxLength()
 	        }
 	    }
 	    else {
