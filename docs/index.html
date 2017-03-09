@@ -8,7 +8,10 @@
     <div id="app"></div>
 </body>
 <script src="//unpkg.com/markrun/dist/markrun.min.js"></script>
-<script src="../dist/form-test.js"></script>
+<script>
+document.write('<scr' + 'ipt src="../dist/form-test.js?t=' + new Date().getTime() + '"></scri' + 'pt>')
+</script>
+
 <script>
 window.Test = FormTest
 window.require = function () {

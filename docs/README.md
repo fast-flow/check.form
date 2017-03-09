@@ -2,12 +2,55 @@
 
 > The form data validation library.Does not contain UI.
 
+````js
+var Test = require('form-test')
+test = new Test({
+    rule: {
+        'required': {
+            regexp: /\S/,
+            be: true,
+            msg: '请输入{{name}}'
+        },
+        'number': {
+            regexp: /^[+-]?[1-9][0-9]*(\.[0-9]+)?([eE][+-][1-9][0-9]*)?$|^[+-]?0?\.[0-9]+([eE][+-][1-9][0-9]*)?$|^0$/,
+            be: true,
+            msg: '{{name}}的格式错误'
+        },
+        'digits': {
+            regexp: /^\s*\d+\s*$/,
+            be: true,
+            msg: '{{name}}的格式错误'
+        },
+        'email': {
+            regexp: /^\s*([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,20})\s*$/,
+            be: true,
+            msg: '{{name}}的格式错误'
+        },
+        'url': {
+            regexp: /^(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/,
+            be: true,
+            msg: '{{name}}的格式错误'
+        },
+        'easyurl': {
+            regexp: /^(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/,
+            be: true,
+            msg: '{{name}}的格式错误'
+        },
+        'mobile': {
+            regexp: /^1\d{10}$/,
+            be: true,
+            msg: '{{name}}的格式错误'
+        }
+    }
+})
+
+````
+
 ## required
 
 ````js
-var Test = require('form-test')
 console.info('\n\n\n---------- required -----------')
-new Test().check('some', {
+test.check('some', {
     name: 'user',
     tests: [
         {
@@ -26,7 +69,7 @@ new Test().check('some', {
     }
 })
 
-new Test().check('', {
+test.check('', {
     name: 'user',
     tests: [
         {
@@ -50,7 +93,7 @@ new Test().check('', {
 
 ````js
 console.info('\n\n\n---------- email -----------')
-new Test().check('', {
+test.check('', {
     name: 'user email',
     tests: [
         {
@@ -71,7 +114,7 @@ new Test().check('', {
         console.error('""', errros[0].errorMsg)
     }
 })
-new Test().check('mail@qq', {
+test.check('mail@qq', {
     name: 'user email',
     tests: [
         {
@@ -92,7 +135,7 @@ new Test().check('mail@qq', {
         console.error('"mail@qq"', errros[0].errorMsg)
     }
 })
-new Test().check('mail@qq.cc', {
+test.check('mail@qq.cc', {
     name: 'user email',
     tests: [
         {
@@ -119,7 +162,7 @@ new Test().check('mail@qq.cc', {
 
 ````js
 console.info('\n\n\n---------- abbr -----------')
-new FormTest().check('123', {
+test.check('123', {
     name: '邮箱',
     tests: [
         'required',
@@ -137,7 +180,7 @@ new FormTest().check('123', {
 
 ````js
 console.info('\n\n\n---------- msg -----------')
-new FormTest().check('123', {
+test.check('123', {
     name: '用户名',
     tests: [
         {
@@ -167,7 +210,6 @@ new FormTest().check('123', {
 
 ````js
 console.info('\n\n\n---------- addRule -----------')
-var test = new FormTest()
 test.addRule('sensitiveWord', {
     regexp: /(yamadie|yikuyiku)/,
     be: false,
@@ -192,7 +234,7 @@ test.check('yamadie', {
 
 ````js
 console.info('\n\n\n---------- async -----------')
-new FormTest().check('abc', {
+test.check('abc', {
     tests: [
         {
             async: function (done, fail) {
@@ -217,7 +259,7 @@ new FormTest().check('abc', {
 
 ````js
 console.info('\n\n\n---------- equal -----------')
-new FormTest().check('123', {
+test.check('123', {
     name: '重复密码',
     tests: [
         {
@@ -230,7 +272,7 @@ new FormTest().check('123', {
         console.error(errors[0])
     }
 })
-new FormTest().check('123', {
+test.check('123', {
     name: '重复密码',
     tests: [
         {
@@ -249,7 +291,7 @@ new FormTest().check('123', {
 
 ````js
 console.info('\n\n\n---------- every -----------')
-new FormTest().check('abc', {
+test.check('abc', {
     name: '用户名',
     every: true,
     tests: [
@@ -286,15 +328,19 @@ new FormTest().check('abc', {
 
 ````js
 console.info('\n\n\n---------- fn -----------')
-new FormTest().check('123', {
+test.check('123', {
     name: '函数校验',
     tests: [
         {
             fn: function (value) {
-                // fail
-                return "fn 错误消息"
-                // done
-                // return
+                if (/1/.test(value)){
+                    // fail
+                    return "{{name}} 错误消息"
+                }
+                else {
+                    // done
+                    return
+                }
             }
         }
     ]
@@ -310,7 +356,7 @@ new FormTest().check('123', {
 
 ````js
 console.info('\n\n\n---------- min-max -----------')
-new FormTest().check(1, {
+test.check(1, {
     name: '数量',
     tests: [
         {
@@ -327,7 +373,7 @@ new FormTest().check(1, {
     }
 })
 
-new FormTest().check('aa', {
+test.check('aa', {
     name: '数量',
     tests: [
         {
@@ -344,7 +390,7 @@ new FormTest().check('aa', {
         console.log(errors[0])
     }
 })
-new FormTest().check(6, {
+test.check(6, {
     name: '数量',
     tests: [
         {
@@ -360,7 +406,7 @@ new FormTest().check(6, {
         console.log(errors[0])
     }
 })
-new FormTest().check(6, {
+test.check(6, {
     name: '数量',
     tests: [
         {
@@ -383,7 +429,7 @@ new FormTest().check(6, {
 
 ````js
 console.info('\n\n\n---------- minLength-maxLength -----------')
-new FormTest().check('123', {
+test.check('123', {
     name: '密码',
     tests: [
         {
@@ -396,7 +442,7 @@ new FormTest().check('123', {
         console.log(errors[0])
     }
 })
-new FormTest().check('1234', {
+test.check('1234', {
     name: '密码',
     tests: [
         {
@@ -409,7 +455,7 @@ new FormTest().check('1234', {
         console.log(errors[0])
     }
 })
-new FormTest().check('1', {
+test.check('1', {
     name: '密码',
     tests: [
         {
@@ -423,7 +469,7 @@ new FormTest().check('1', {
         console.log(errors[0])
     }
 })
-new FormTest().check('123456', {
+test.check('123456', {
     name: '密码',
     tests: [
         {
@@ -437,7 +483,7 @@ new FormTest().check('123456', {
         console.log(errors[0])
     }
 })
-new FormTest().check('123', {
+test.check('123', {
     name: '密码',
     tests: [
         {
@@ -458,7 +504,7 @@ new FormTest().check('123', {
 > like minLength maxLength
 
 ````js
-new FormTest().check('123', {
+test.check('123', {
     name: '密码',
     tests: [
         {
@@ -496,7 +542,7 @@ new FormTest().check('123', {
 
 ````js
 console.info('\n\n\n---------- regexp -----------')
-new FormTest().check('123', {
+test.check('123', {
     name: '用户名',
     tests: [
         {
@@ -515,7 +561,7 @@ new FormTest().check('123', {
 ### be-false
 
 ````js
-new FormTest().check('123', {
+test.check('123', {
     name: '用户名',
     tests: [
         {
@@ -536,21 +582,14 @@ new FormTest().check('123', {
 ````js
 console.info('\n\n\n---------- replaceRule -----------')
 var test = new FormTest()
-test.addRule('sensitiveWord', {
-    regexp: /(yamadie|yikuyiku)/,
-    be: false,
-    msg: "{{name}}存在敏感词"
-})
-test.replaceRule('sensitiveWord', {
-    regexp: /(yamadie|yikuyiku)/,
-    be: false,
-    msg: "{{name}}敏感!!!!!!!"
+test.replaceRule('email', {
+    msg: "{{name}}不是正确的邮箱"
 })
 test.check('yamadie', {
-    name: '昵称',
+    name: '个人邮箱',
     tests: [
         {
-            rule: 'sensitiveWord'
+            rule: 'email'
         }
     ]
 }, {
