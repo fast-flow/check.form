@@ -57,17 +57,8 @@ test.check('some', {
             rule: 'required'
         }
     ]
-}, {
-    always: function (stat) {
-        console.log('stat', stat)
-        console.log('"some"', 'always')
-    },
-    done: function () {
-        console.info('"some"', 'done')
-    },
-    fail: function (errros) {
-        console.error('"some"', errros[0].errorMsg)
-    }
+}, function (stat) {
+    console.log('required "some"', stat)
 })
 
 test.check('', {
@@ -77,17 +68,8 @@ test.check('', {
             rule: 'required'
         }
     ]
-}, {
-    always: function (stat) {
-        console.log('stat', stat)
-        console.log('""', 'always')
-    },
-    done: function () {
-        console.log('""', 'done')
-    },
-    fail: function (errros) {
-        console.error('""', errros[0].errorMsg)
-    }
+}, function (stat) {
+    console.log('required ""', stat)
 })
 ````
 
@@ -105,16 +87,8 @@ test.check('', {
             rule: 'email'
         }
     ]
-}, {
-    always: function () {
-        console.log('""', 'always')
-    },
-    done: function () {
-        console.log('""', 'done')
-    },
-    fail: function (errros) {
-        console.error('""', errros[0].errorMsg)
-    }
+}, function (stat) {
+    console.log('email ""', stat)
 })
 test.check('mail@qq', {
     name: 'user email',
@@ -126,16 +100,8 @@ test.check('mail@qq', {
             rule: 'email'
         }
     ]
-}, {
-    always: function () {
-        console.log('"mail@qq"', 'always')
-    },
-    done: function () {
-        console.info('"mail@qq"', 'done')
-    },
-    fail: function (errros) {
-        console.error('"mail@qq"', errros[0].errorMsg)
-    }
+}, function (stat) {
+    console.log('email "mail@qq"', stat)
 })
 test.check('mail@qq.cc', {
     name: 'user email',
@@ -147,16 +113,8 @@ test.check('mail@qq.cc', {
             rule: 'email'
         }
     ]
-}, {
-    always: function () {
-        console.log('"mail@qq.cc"', 'always')
-    },
-    done: function () {
-        console.info('"mail@qq.cc"', 'done')
-    },
-    fail: function (errros) {
-        console.error('"mail@qq.cc"', errros[0].errorMsg)
-    }
+}, function (stat) {
+    console.log('email "mail@qq.cc"', stat)
 })
 ````
 
@@ -170,10 +128,8 @@ test.check('123', {
         'required',
         'email'
     ]
-}, {
-    fail: function (errors) {
-        console.log(errors[0])
-    }
+}, function (stat) {
+    console.log('abbr "123"', stat)
 })
 ````
 
@@ -192,10 +148,8 @@ test.check('123', {
             msg: '{{ name }}必须存在abc {{self.some}}'
         }
     ]
-}, {
-    fail: function (errors) {
-        console.log(errors[0])
-    }
+}, function (stat) {
+    console.log('msg "123"', stat)
 })
 ````
 
@@ -225,10 +179,8 @@ test.check('yamadie', {
             rule: 'sensitiveWord'
         }
     ]
-}, {
-    fail: function (errors) {
-        console.log(errors[0])
-    }
+}, function (stat) {
+    console.log('addRule "123"', stat)
 })
 ````
 
@@ -251,8 +203,8 @@ test.check('abc', {
     asyncFail: function (error) {
         console.error(error.errorMsg)
     },
-    always: function () {
-        console.log('async always')
+    always: function (stat) {
+        console.log('async "123"', stat)
     }
 })
 ````
@@ -269,10 +221,8 @@ test.check('123', {
             msg: '两次输入密码不一致'
         }
     ]
-}, {
-    fail: function (errors) {
-        console.error(errors[0])
-    }
+}, function (stat) {
+    console.log('equal "123" "1234"', stat)
 })
 test.check('123', {
     name: '重复密码',
@@ -282,10 +232,8 @@ test.check('123', {
             msg: '两次输入密码不一致'
         }
     ]
-}, {
-    done: function () {
-        console.info('重复密码验证通过')
-    }
+}, function (stat) {
+    console.log('equal "123" "123"', stat)
 })
 ````
 
@@ -314,14 +262,8 @@ test.check('abc', {
             }
         }
     ]
-}, {
-    asyncFail: function (error) {
-        console.error(error)
-    },
-    fail: function (errors) {
-        console.error('every')
-        console.table(errors)
-    }
+}, function (stat) {
+    console.log('every "abc"', stat)
 })
 ````
 
@@ -346,10 +288,8 @@ test.check('123', {
             }
         }
     ]
-}, {
-    fail: function (errors) {
-        console.error(errors[0].errorMsg)
-    }
+}, function (stat) {
+    console.log('fn "abc"', stat)
 })
 ````
 
@@ -358,7 +298,7 @@ test.check('123', {
 
 ````js
 console.info('\n\n\n---------- min-max -----------')
-test.check(1, {
+test.check('1', {
     name: '数量',
     tests: [
         {
@@ -369,10 +309,8 @@ test.check(1, {
             msg: '{{name}}最小{{self.min}}'
         }
     ]
-}, {
-    fail: function (errors) {
-        console.log(errors[0])
-    }
+}, function (stat) {
+    console.log('max min 1', stat)
 })
 
 test.check('aa', {
@@ -387,12 +325,10 @@ test.check('aa', {
             msg: '{{name}}最小{{self.min}}'
         }
     ]
-}, {
-    fail: function (errors) {
-        console.log(errors[0])
-    }
+}, function (stat) {
+    console.log('max min 2 "aa"', stat)
 })
-test.check(6, {
+test.check("6", {
     name: '数量',
     tests: [
         {
@@ -403,12 +339,10 @@ test.check(6, {
             msg: '{{name}}最大{{self.max}}'
         }
     ]
-}, {
-    fail: function (errors) {
-        console.log(errors[0])
-    }
+}, function (stat) {
+    console.log('max min "6"', stat)
 })
-test.check(6, {
+test.check("6", {
     name: '数量',
     tests: [
         {
@@ -420,10 +354,8 @@ test.check(6, {
             msg: '{{name}}必须是{{self.min}}~{{self.max}}'
         }
     ]
-}, {
-    fail: function (errors) {
-        console.log(errors[0])
-    }
+}, function (stat) {
+    console.log('max 5 min 2 "6"', stat)
 })
 ````
 

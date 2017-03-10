@@ -221,11 +221,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	module.exports = function (value, settings, callback) {
 	    var self = this
+	    if (typeof callback === 'function') {
+	        callback = {
+	            always: callback
+	        }
+	    }
 	    var defaultCallback = {
 	        done: function () {},
 	        fail: function () {},
 	        asyncFail: function () {},
 	        always: function () {}
+	    }
+	    let callbackAlways = function (stat) {
+	        let outputStat = extend(true, {}, stat)
+	        outputStat.fail = outputStat.async.fail.concat(outputStat.sync.fail)
+	        outputStat.done = outputStat.async.done.concat(outputStat.sync.done)
+	        callback.always(outputStat)
 	    }
 	    extend(true, defaultCallback, callback)
 	    callback = defaultCallback
@@ -246,7 +257,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            callback.done()
 	        }
 	        if (stat.async.count === stat.async.done.length + stat.async.fail.length) {
-	            callback.always(stat)
+	            callbackAlways(stat)
 	        }
 	    }
 	    var emit = function (action) {
@@ -310,7 +321,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (stat.sync.fail.length === 0) {
 	            callback.done()
 	        }
-	        callback.always(stat)
+	        callbackAlways(stat)
 	    }
 	}
 
@@ -328,7 +339,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param emit {function} ./check.js: emeit function () {}
 	 */
 	var renderMsg = function (template, data) {
-	     template = template || ''
+	    template = template || ''
 	     // 不要删除此段代码，永远保持向前兼容
 	     if (data.self.maxLengthByte) {
 	         data.self.maxLengthByteChinese = Math.floor(data.self.maxLengthByte / 2)
@@ -1322,11 +1333,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = {
 		"name": "form-test",
-		"version": "0.5.0",
+		"version": "0.6.0",
 		"description": "The form data validation library.Does not contain UI.",
 		"main": "lib/index.js",
 		"scripts": {
 			"build": "webpack",
+			"dev": "webpack --watch",
 			"test-ci": "./node_modules/jest/bin/jest.js",
 			"test": "./node_modules/jest/bin/jest.js --watch"
 		},
