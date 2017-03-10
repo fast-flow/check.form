@@ -31,7 +31,7 @@ it('always sync done 1 error 1', function () {
                         ],
                         "fail": [
                             {
-                                "errorMsg": "必须存在数字",
+                                "msg": "必须存在数字",
                                 "rule": {
                                     "be": true,
                                     "msg": "必须存在数字",
@@ -48,7 +48,7 @@ it('always sync done 1 error 1', function () {
                             "count": 2,
                             "fail": [
                                 {
-                                    "errorMsg": "必须存在数字",
+                                    "msg": "必须存在数字",
                                     "rule": {
                                         "be": true,
                                         "msg": "必须存在数字",
@@ -94,7 +94,7 @@ it('always func', function () {
                 {
                     "fail": [
                         {
-                            "errorMsg": "必须存在z",
+                            "msg": "必须存在z",
                             "rule": {
                                 "be": true,
                                 "msg": "必须存在z",
@@ -112,7 +112,7 @@ it('always func', function () {
                         "count": 1,
                         "fail": [
                             {
-                                "errorMsg": "必须存在z",
+                                "msg": "必须存在z",
                                 "rule": {
                                     "be": true,
                                     "msg": "必须存在z",
@@ -151,7 +151,7 @@ it('always sync error 2', function () {
                     {
                         "fail": [
                             {
-                                "errorMsg": "必须存在z",
+                                "msg": "必须存在z",
                                 "rule": {
                                     "be": true,
                                     "msg": "必须存在z",
@@ -169,7 +169,7 @@ it('always sync error 2', function () {
                             "count": 1,
                             "fail": [
                                 {
-                                    "errorMsg": "必须存在z",
+                                    "msg": "必须存在z",
                                     "rule": {
                                         "be": true,
                                         "msg": "必须存在z",
@@ -209,7 +209,7 @@ it('always sync error 2 every', function () {
                     {
                         "fail": [
                             {
-                                "errorMsg": "必须存在z",
+                                "msg": "必须存在z",
                                 "rule": {
                                     "be": true,
                                     "msg": "必须存在z",
@@ -217,7 +217,7 @@ it('always sync error 2 every', function () {
                                 }
                             },
                             {
-                                "errorMsg": "必须存在数字",
+                                "msg": "必须存在数字",
                                 "rule": {
                                     "be": true,
                                     "msg": "必须存在数字",
@@ -235,7 +235,7 @@ it('always sync error 2 every', function () {
                             "count": 2,
                             "fail": [
                                 {
-                                    "errorMsg": "必须存在z",
+                                    "msg": "必须存在z",
                                     "rule": {
                                         "be": true,
                                         "msg": "必须存在z",
@@ -243,7 +243,7 @@ it('always sync error 2 every', function () {
                                     }
                                 },
                                 {
-                                    "errorMsg": "必须存在数字",
+                                    "msg": "必须存在数字",
                                     "rule": {
                                         "be": true,
                                         "msg": "必须存在数字",
@@ -280,7 +280,7 @@ it('always async', function () {
         }, {
             always: function (stat) {
                 expect(JSON.stringify(stat)).toEqual(
-                    '{\"sync\":{\"fail\":[{\"rule\":{\"regexp\":{},\"msg\":\"不能存在z\"},\"errorMsg\":\"不能存在z\"}],\"done\":[],\"count\":1},\"async\":{\"fail\":[],\"done\":[],\"count\":0},\"fail\":[{\"rule\":{\"regexp\":{},\"msg\":\"不能存在z\"},\"errorMsg\":\"不能存在z\"}],\"done\":[]}'
+                    '{\"sync\":{\"fail\":[{\"rule\":{\"regexp\":{},\"msg\":\"不能存在z\"},\"msg\":\"不能存在z\"}],\"done\":[],\"count\":1},\"async\":{\"fail\":[],\"done\":[],\"count\":0},\"fail\":[{\"rule\":{\"regexp\":{},\"msg\":\"不能存在z\"},\"msg\":\"不能存在z\"}],\"done\":[]}'
                 )
                 resolve()
             }
@@ -305,7 +305,7 @@ it('always async', function () {
             }, {
                 always: function (stat) {
                     expect(JSON.stringify(stat)).toEqual(
-                        '{"sync":{"fail":[{"rule":{"regexp":{},"msg":"不能存在z"},"errorMsg":"不能存在z"}],"done":[],"count":1},"async":{"fail":[{"rule":{},"errorMsg":"异步错误消息"}],"done":[],"count":1},"fail":[{"rule":{},"errorMsg":"异步错误消息"},{"rule":{"regexp":{},"msg":"不能存在z"},"errorMsg":"不能存在z"}],"done":[]}'
+                        '{"sync":{"fail":[{"rule":{"regexp":{},"msg":"不能存在z"},"msg":"不能存在z"}],"done":[],"count":1},"async":{"fail":[{"rule":{},"msg":"异步错误消息"}],"done":[],"count":1},"fail":[{"rule":{},"msg":"异步错误消息"},{"rule":{"regexp":{},"msg":"不能存在z"},"msg":"不能存在z"}],"done":[]}'
                     )
                     resolve()
                 }
@@ -336,7 +336,7 @@ it('always multiple async', function () {
             ]
         }, {
             always: function (stat) {
-                expect(JSON.stringify(stat)).toEqual('{"sync":{"fail":[],"done":[],"count":0},"async":{"fail":[{"rule":{},"errorMsg":"async error 1"},{"rule":{},"errorMsg":"async error 2"}],"done":[],"count":2},"fail":[{"rule":{},"errorMsg":"async error 1"},{"rule":{},"errorMsg":"async error 2"}],"done":[]}')
+                expect(JSON.stringify(stat)).toEqual('{"sync":{"fail":[],"done":[],"count":0},"async":{"fail":[{"rule":{},"msg":"async error 1"},{"rule":{},"msg":"async error 2"}],"done":[],"count":2},"fail":[{"rule":{},"msg":"async error 1"},{"rule":{},"msg":"async error 2"}],"done":[]}')
                 resolve()
             }
         })

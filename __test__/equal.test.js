@@ -18,7 +18,7 @@ it('basic', function () {
                 expect(errors).toEqual(
                     [
                         {
-                            "errorMsg": "两次输入密码不一致",
+                            "msg": "两次输入密码不一致",
                             "rule": {
                                 "equal": "1234",
                                 "msg": "两次输入密码不一致"

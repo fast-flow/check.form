@@ -13,7 +13,7 @@ it('abbr', function () {
                 expect(errors).toEqual(
                     [
                         {
-                            "errorMsg": "昵称的格式不正确",
+                            "msg": "昵称的格式不正确",
                             "rule": {
                                 "be": true,
                                 "msg": "{{name}}的格式不正确",

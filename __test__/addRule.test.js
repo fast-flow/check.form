@@ -19,7 +19,7 @@ it('sensitive word', function () {
                 expect(errors).toEqual(
                     [
                         {
-                            "errorMsg": "昵称存在敏感词",
+                            "msg": "昵称存在敏感词",
                             "rule": {
                                 "be": false,
                                 "msg": "{{name}}存在敏感词",

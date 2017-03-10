@@ -90,7 +90,7 @@ it('email', function () {
                     expect(errors).toEqual(
                         [
                             {
-                                "errorMsg": "的格式不正确",
+                                "msg": "的格式不正确",
                                 "rule": {
                                     "be": true,
                                     "msg": "{{name}}的格式不正确",
@@ -136,7 +136,7 @@ it('url', function () {
                 },
                 fail: function (errors) {
                     expect(errors).toEqual(
-                        [{"errorMsg": "的格式不正确", "rule": {"be": true, "msg": "{{name}}的格式不正确", "regexp": /^(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/}}]
+                        [{"msg": "的格式不正确", "rule": {"be": true, "msg": "{{name}}的格式不正确", "regexp": /^(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/}}]
                     )
                     resolve()
                 }
@@ -212,7 +212,7 @@ it('mobile', function () {
                 },
                 fail: function (errors) {
                     expect(errors).toEqual(
-                        [{"errorMsg": "请输入正确的手机号码", "rule": {"be": true, "msg": "请输入正确的{{name}}", "regexp": /^1\d{10}$/}}]
+                        [{"msg": "请输入正确的手机号码", "rule": {"be": true, "msg": "请输入正确的{{name}}", "regexp": /^1\d{10}$/}}]
                     )
                     resolve()
                 }

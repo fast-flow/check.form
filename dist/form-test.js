@@ -276,13 +276,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            case 'SYNC_FAIL':
 	                stat.sync.fail.push({
 	                    rule: action.rule,
-	                    errorMsg: action.errorMsg
+	                    msg: action.errorMsg
 	                })
 	            break
 	            case 'ASYNC_FAIL':
 	                var errorData = {
 	                    rule: action.rule,
-	                    errorMsg: action.errorMsg
+	                    msg: action.errorMsg
 	                }
 	                stat.async.fail.push(errorData)
 	                callback.asyncFail(errorData)

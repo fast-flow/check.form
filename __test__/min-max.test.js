@@ -13,7 +13,7 @@ it('min 5 value 2', function () {
         }, {
             fail: function (errors) {
                 expect(errors).toEqual(
-                        [{"errorMsg": "必须大于5", "rule": {"min": 5, "msg": "必须大于{{self.min}}"}}]
+                        [{"msg": "必须大于5", "rule": {"min": 5, "msg": "必须大于{{self.min}}"}}]
                 )
                 resolve()
             }
@@ -50,7 +50,7 @@ it('max 5 value 6', function () {
         }, {
             fail: function (errors) {
                 expect(errors).toEqual(
-                    [{"errorMsg": "必须小于或等于5", "rule": {"max": 5, "msg": "必须小于或等于{{self.max}}"}}]
+                    [{"msg": "必须小于或等于5", "rule": {"max": 5, "msg": "必须小于或等于{{self.max}}"}}]
                 )
                 resolve()
             }
@@ -109,7 +109,7 @@ it('minLength 5', function () {
                 expect(errors).toEqual(
                     [
                         {
-                            "errorMsg": "密码最少5位",
+                            "msg": "密码最少5位",
                             "rule": {
                                 "minLength": 5,
                                 "msg": "密码最少{{self.minLength}}位"
@@ -157,7 +157,7 @@ it('minLength 5 trim:true', function () {
                 expect(errors).toEqual(
                     [
                         {
-                            "errorMsg": "密码最少5位",
+                            "msg": "密码最少5位",
                             "rule": {
                                 "minLength": 5,
                                 "trim": true,
@@ -188,7 +188,7 @@ it('maxLength 10', function () {
                 expect(errors).toEqual(
                     [
                         {
-                            "errorMsg": "密码最多10位",
+                            "msg": "密码最多10位",
                             "rule": {
                                 "maxLength": 10,
                                 "msg": "密码最多{{self.maxLength}}位"
@@ -235,7 +235,7 @@ it('maxLength 10 trim:false', function () {
                 expect(errors).toEqual(
                     [
                         {
-                            "errorMsg": "密码最多10位",
+                            "msg": "密码最多10位",
                             "rule": {
                                 "maxLength": 10,
                                 "msg": "密码最多{{self.maxLength}}位"
@@ -284,7 +284,7 @@ it('minLength maxLength', function () {
                  expect(errors).toEqual(
                      [
                         {
-                            "errorMsg": "密码最少5位，最多10位",
+                            "msg": "密码最少5位，最多10位",
                             "rule": {
                                 "maxLength": 10,
                                 "minLength": 5,
@@ -333,7 +333,7 @@ it('minLengthByte 5', function () {
                 expect(errors).toEqual(
                     [
                         {
-                            "errorMsg": "密码最少5位字节",
+                            "msg": "密码最少5位字节",
                             "rule": {
                                 "minLengthByte": 5,
                                 "minLengthByteChinese": 2,
@@ -383,7 +383,7 @@ it('minLengthByte 5 trim:true', function () {
                 expect(errors).toEqual(
                     [
                         {
-                            "errorMsg": "密码最少5位字节",
+                            "msg": "密码最少5位字节",
                             "rule": {
                                 "minLengthByte": 5,
                                 "minLengthByteChinese": 2,
@@ -416,7 +416,7 @@ it('maxLengthByte 10', function () {
                 expect(errors).toEqual(
                     [
                         {
-                            "errorMsg": "密码最多10位字节",
+                            "msg": "密码最多10位字节",
                             "rule": {
                                 "maxLengthByte": 10,
                                 "maxLengthByteChinese": 5,
@@ -464,7 +464,7 @@ it('maxLengthByte 10 trim:false', function () {
                 expect(errors).toEqual(
                     [
                         {
-                            "errorMsg": "密码最多10位字节",
+                            "msg": "密码最多10位字节",
                             "rule": {
                                 "maxLengthByte": 10,
                                 "maxLengthByteChinese": 5,
@@ -515,7 +515,7 @@ it('minLengthByte maxLengthByte', function () {
                  expect(errors).toEqual(
                      [
                         {
-                            "errorMsg": "密码最少5位字节，最多10位字节",
+                            "msg": "密码最少5位字节，最多10位字节",
                             "rule": {
                                 "maxLengthByte": 10,
                                 "minLengthByte": 5,

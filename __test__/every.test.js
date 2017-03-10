@@ -20,7 +20,7 @@ var test = new Test()
 //                 expect(errors).toEqual(
 //                     [
 //                         {
-//                             "errorMsg": "用户名必须存在数字",
+//                             "msg": "用户名必须存在数字",
 //                             "rule": {
 //                                 "be": true,
 //                                 "msg": "{{name}}必须存在数字",
@@ -53,7 +53,7 @@ var test = new Test()
 //                     expect(errors).toEqual(
 //                         [
 //                             {
-//                                 "errorMsg": "用户名必须存在数字",
+//                                 "msg": "用户名必须存在数字",
 //                                 "rule": {
 //                                     "be": true,
 //                                     "msg": "{{name}}必须存在数字",
@@ -61,7 +61,7 @@ var test = new Test()
 //                                 }
 //                             },
 //                             {
-//                                 "errorMsg": "用户名必须大于或等于5位",
+//                                 "msg": "用户名必须大于或等于5位",
 //                                 "rule": {
 //                                     "min": 5,
 //                                     "msg": "{{name}}必须大于或等于5位"
@@ -103,7 +103,7 @@ var test = new Test()
 //                 expect(errors).toEqual(
 //                     [
 //                         {
-//                             "errorMsg": "用户名必须存在数字",
+//                             "msg": "用户名必须存在数字",
 //                             "rule": {
 //                                 "be": true,
 //                                 "msg": "{{name}}必须存在数字",
@@ -145,7 +145,7 @@ it('debug', function () {
             ]
         }, {
             asyncFail: function (error) {
-                expect(error.errorMsg).toEqual("异步错误消息")
+                expect(error.msg).toEqual("异步错误消息")
                 expect(typeof error.rule.async).toEqual('function')
                 resolve()
             },
@@ -158,14 +158,14 @@ it('debug', function () {
                                 be: true,
                                 msg: '{{name}}必须存在数字'
                             },
-                            errorMsg: '用户名必须存在数字'
+                            msg: '用户名必须存在数字'
                         },
                         {
                             rule: {
                                 minLength: 5,
                                 msg: '{{name}}必须大于或等于{{self.minLength}}位'
                             },
-                            errorMsg: '用户名必须大于或等于5位'
+                            msg: '用户名必须大于或等于5位'
                         }
                     ]
                 )

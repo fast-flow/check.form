@@ -15,7 +15,7 @@ it('ajax', function () {
             ]
         }, {
             asyncFail: function (error) {
-                expect(error.errorMsg).toEqual("异步错误消息")
+                expect(error.msg).toEqual("异步错误消息")
                 expect(typeof error.rule.async).toEqual('function')
                 resolve()
             }
@@ -64,7 +64,7 @@ it('Multiple async errors', function () {
             },
             asyncFail: function (error) {
                 errorCount++
-                expect(error.errorMsg).toMatch(/async error (1|2)/)
+                expect(error.msg).toMatch(/async error (1|2)/)
                 if (errorCount === 2) {
                     resolve()
                 }

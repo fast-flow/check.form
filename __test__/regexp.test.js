@@ -21,7 +21,7 @@ it('regexp be true', function () {
                                 "msg": "{{ name }}必须存在abc",
                                 "regexp": /abc/
                             },
-                            "errorMsg": "用户名必须存在abc"
+                            "msg": "用户名必须存在abc"
                         }
                     ]
                 )
@@ -52,7 +52,7 @@ it('regexp be false', function () {
                                 "msg": "{{ name }}不能存在abc",
                                 "regexp": /abc/
                             },
-                            "errorMsg": "用户名不能存在abc"
+                            "msg": "用户名不能存在abc"
                         }
                     ]
                 )
@@ -85,7 +85,7 @@ it('regexp be:false trim:true', function () {
                                 "msg": "{{ name }}不能存在abc",
                                 "regexp": /^abc$/
                             },
-                            "errorMsg": "用户名不能存在abc"
+                            "msg": "用户名不能存在abc"
                         }
                     ]
                 )

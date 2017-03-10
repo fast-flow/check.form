@@ -19,7 +19,7 @@ it('function', function () {
                 reject()
             },
             fail: function (errors) {
-                expect(errors[0].errorMsg).toEqual("错误消息")
+                expect(errors[0].msg).toEqual("错误消息")
                 expect(typeof errors[0].rule.fn).toEqual('function')
                 resolve()
             }

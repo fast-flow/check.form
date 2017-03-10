@@ -23,7 +23,7 @@ it('msg mustache', function () {
                                 "msg": '{{ name }}必须存在abc {{self.some}}',
                                 "regexp": /abc/
                             },
-                            "errorMsg": "用户名必须存在abc 123"
+                            "msg": "用户名必须存在abc 123"
                         }
                     ]
                 )
