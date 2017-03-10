@@ -58,7 +58,8 @@ test.check('some', {
         }
     ]
 }, {
-    always: function () {
+    always: function (stat) {
+        console.log('stat', stat)
         console.log('"some"', 'always')
     },
     done: function () {
@@ -77,7 +78,8 @@ test.check('', {
         }
     ]
 }, {
-    always: function () {
+    always: function (stat) {
+        console.log('stat', stat)
         console.log('""', 'always')
     },
     done: function () {
