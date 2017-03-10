@@ -1333,7 +1333,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = {
 		"name": "form-test",
-		"version": "0.6.0",
+		"version": "0.7.0",
 		"description": "The form data validation library.Does not contain UI.",
 		"main": "lib/index.js",
 		"scripts": {
